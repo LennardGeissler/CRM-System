@@ -4,7 +4,9 @@ import { Customer, Status, statuses } from "../data-card.ts";
 import './Deals.scss';
 
 const Deals = () => {
+    const [view, setView] = useState('board');
     const [cards, setCards] = useState<Customer[]>([]);
+
     const columns = statuses.map((status) => {
         const cardsInColumn = cards.filter((card) => card.status === status);
         return {
@@ -48,31 +50,12 @@ const Deals = () => {
         setCurrentlyHoveringOver(status)
     }
 
-    return (
-        <div className="deals">
-            <div className="options">
-                <div className="change-view">
-                    <button className="board-view">
-                        <span className="material-symbols-outlined">
-                            view_column
-                        </span>
-                    </button>
-                    <button className="list-view">
-                        <span className="material-symbols-outlined">
-                            list
-                        </span>
-                    </button>
-                    <button className="table-view">
-                        <span className="material-symbols-outlined">
-                            view_module
-                        </span>
-                    </button>
-                </div>
+    const changeView = (selectedView: any) => {
+        setView(selectedView);
+    };
 
-                <button className="add-card">
-                    + Deal
-                </button>
-            </div>
+    const showBoardView = () => {
+        return (
             <div className="board">
                 {columns.map(column => (
                     <div onDrop={(e) => handleDrop(e, column.status)} onDragOver={(e) => e.preventDefault()} onDragEnter={() => handleDragEnter(column.status)} className="column">
@@ -85,6 +68,55 @@ const Deals = () => {
                     </div>
                 ))}
             </div>
+        );
+    }
+
+    const showListView = () => {
+        return (
+            <div className="list">
+                {cards.map((card) => (
+                    <Card key={card.id} card={card} updateCard={updateCard} />
+                ))}
+            </div>
+        );
+    }
+
+    const showTableView = () => {
+        return (
+            <div className="table">
+
+            </div>
+        );
+    }
+
+    return (
+        <div className="deals">
+            <div className="options">
+                <div className="change-view">
+                    <button className={view === "board" ? "active" : ""} onClick={() => changeView("board")}>
+                        <span className="material-symbols-outlined">
+                            view_column
+                        </span>
+                    </button>
+                    <button className={view === "list" ? "active" : ""} onClick={() => changeView("list")}>
+                        <span className="material-symbols-outlined">
+                            list
+                        </span>
+                    </button>
+                    <button className={view === "table" ? "active" : ""} onClick={() => changeView("table")}>
+                        <span className="material-symbols-outlined">
+                            view_module
+                        </span>
+                    </button>
+                </div>
+
+                <button className="add-card">
+                    + Deal
+                </button>
+            </div>
+            {view === "board" ? showBoardView() : ""}
+            {view === "list" ? showListView() : ""}
+            {view === "table" ? showTableView() : ""}
         </div>
     );
 }

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from "./components/Header.tsx";
 import SideBar from "./components/SideBar.tsx";
 import Deals from "./components/Deals.tsx";
+import Login from "./components/Login.tsx";
 import Dashboard from "./components/Dashboard.tsx";
 import Preloader from "./components/Preloader.tsx";
 import './App.scss';
@@ -26,6 +27,7 @@ function App() {
           <Routes>
             <Route path="/dashboard" element={<Dashboard />}/>
             <Route path="/deals" element={<Deals />} />
+            <Route path="/login" element={<Login />}/>
           </Routes>
         </Router>
       </div>

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './Header.scss';
 
 const Header = () => {
     const [searchTerm, setSearchTerm] = useState('');
+    const [pathname, setPathname] = useState(window.location.pathname);
 
     const handleInputChange = (event: any) => {
         setSearchTerm(event.target.value);
@@ -14,9 +15,21 @@ const Header = () => {
         console.log('Suche nach:', searchTerm);
     };
 
+    useEffect(() => {
+        const handleLocationChange = () => {
+            setPathname(window.location.pathname);
+        };
+
+        window.addEventListener('popstate', handleLocationChange);
+
+        return () => {
+            window.removeEventListener('popstate', handleLocationChange);
+        };
+    }, []);
+
     return (
         <header>
-            <h1>Deals</h1>
+            <h1>{pathname[1].toUpperCase() + pathname.slice(2)}</h1>
 
             <form className="search-bar" onSubmit={handleSubmit}>
                 <span className="material-symbols-outlined">
