@@ -1,0 +1,125 @@
+aside {
+    width: 80px;
+    height: 100vh;
+    background-color: rgb(42, 64, 102);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 100;
+    color: rgba(#fff, 0.9);
+    position: relative;
+
+    .top {
+        width: 100%;
+        height: 100px;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+
+        img {
+            width: 48px;
+            height: 48px;
+        }
+    }
+
+    .middle {
+        width: 100%;
+        height: calc(100vh - 100px);
+
+        nav {
+            ul {
+                list-style-type: none;
+                list-style: none;
+
+                li {
+                    width: 100%;
+                    height: 64px;
+
+                    a {
+                        width: 100%;
+                        height: 64px;
+                        display: flex;
+                        align-items: center;
+                        background-color: transparent;
+                        border: none;
+                        position: relative;
+                        text-decoration: none;
+
+                        span {
+                            font-size: 30px;
+                            font-weight: 200 !important;
+                            text-align: center;
+                            color: rgba(#fff, 0.95);
+                            text-decoration: none;
+                            margin: 0 auto;
+
+                        }
+
+                        &:hover {
+                            background-color: rgba(132, 139, 200, 0.18);
+                            color: cornflowerblue;
+                            transition: 0.3s ease;
+                            cursor: pointer;
+
+                            span {
+                                margin-left: 17px;
+                            }
+                        }
+
+                        &:hover::before {
+                            content: '';
+                            width: 8px;
+                            height: 100%;
+                            margin: 0;
+                            padding: 0;
+                            background-color: cornflowerblue;
+                            transition: all 0.3s ease;
+                        }
+
+                    }
+
+                    a.active {
+                        background-color: rgba(132, 139, 200, 0.18);
+                        color: cornflowerblue;
+                        transition: 0.3s ease;
+                        cursor: pointer;
+
+                        span {
+                            margin-left: 17px;
+                        }
+                    }
+
+                    a.active::before {
+                        content: '';
+                            width: 8px;
+                            height: 100%;
+                            margin: 0;
+                            padding: 0;
+                            background-color: cornflowerblue;
+                            transition: all 0.3s ease;
+                    }
+                }
+
+                .bottom {
+                    position: absolute;
+                    z-index: 100;
+                    bottom: 0;
+                    text-align: center;
+                    width: 100%;
+                }
+
+                .seperator {
+                    padding: 0 16px;
+                    height: 60px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    div {
+                        width: 100%;
+                        height: 1px;
+                        background-color: rgba($color: #fff, $alpha: 0.85);
+                    }
+                }
+            }
+        }
+    }
+}

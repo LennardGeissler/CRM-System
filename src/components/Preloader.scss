@@ -1,0 +1,71 @@
+.preloader {
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    animation: fadeOutAnimation ease 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.progress {
+    position: relative;
+    height: 10px;
+    width: 1110%;
+    border: 10px solid rgb(42, 64, 102);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+
+    .color {
+        position: absolute;
+        background-color: #ffffff;
+        width: 0px;
+        height: 10px;
+        border-radius: 15px;
+        animation: progres 2s infinite linear;
+    }
+}
+
+
+@keyframes progres {
+    0% {
+        width: 0%;
+    }
+
+    25% {
+        width: 50%;
+    }
+
+    50% {
+        width: 75%;
+    }
+
+    75% {
+        width: 85%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOutAnimation {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

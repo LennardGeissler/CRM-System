@@ -1,0 +1,60 @@
+{
+  "cards": [
+    {
+      "id": "1",
+      "person": "Max Mustermann",
+      "company": "Max Mustermann GmbH",
+      "money": 2200,
+      "status": "Offer Made"
+    },
+    {
+      "id": "2",
+      "person": "Max Mustermann",
+      "company": "Max Mustermann GmbH",
+      "money": 2200,
+      "status": ""
+    },
+    {
+      "id": "3",
+      "person": "Max Mustermann",
+      "company": "Max Mustermann GmbH",
+      "money": 2200,
+      "status": "In Development"
+    },
+    {
+      "id": "4",
+      "person": "Max Mustermann",
+      "company": "Max Mustermann GmbH",
+      "money": 2200,
+      "status": "In Development"
+    },
+    {
+      "id": "5",
+      "person": "Max Mustermann",
+      "company": "Max Mustermann GmbH",
+      "money": 2200,
+      "status": "Negotiation Started"
+    },
+    {
+      "id": "6",
+      "person": "Max Mustermann",
+      "company": "Max Mustermann GmbH",
+      "money": 2200,
+      "status": "Qualified Lead"
+    },
+    {
+      "id": "7",
+      "person": "Max Mustermann",
+      "company": "Max Mustermann GmbH",
+      "money": 2200,
+      "status": "Qualified Lead"
+    },
+    {
+      "id": "8",
+      "person": "Max Mustermann",
+      "company": "Max Mustermann GmbH",
+      "money": 2200,
+      "status": "Contact Made"
+    }
+  ]
+}
