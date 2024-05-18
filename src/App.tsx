@@ -5,6 +5,7 @@ import SideBar from './layouts/SideBar/SideBar.tsx';
 import Deals from "./pages/Deals/Deals.tsx";
 import Login from "./pages/Login/Login.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
+import Calendar from "./pages/Calendar/Calendar.tsx";
 import './App.scss';
 
 function App() {
@@ -28,6 +29,7 @@ function MainContent() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/deals" element={<Deals />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/calendar" element={<Calendar />} />
         </Routes>
       </div>
     </div>

@@ -12,7 +12,7 @@
       "person": "Max Mustermann",
       "company": "Max Mustermann GmbH",
       "money": 2200,
-      "status": "Offer Made"
+      "status": "Negotiation Started"
     },
     {
       "id": "3",
@@ -26,7 +26,7 @@
       "person": "Max Mustermann",
       "company": "Max Mustermann GmbH",
       "money": 2200,
-      "status": "Negotiation Started"
+      "status": "Offer Made"
     },
     {
       "id": "5",
