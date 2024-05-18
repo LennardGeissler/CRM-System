@@ -1,0 +1,82 @@
+.dashboard {
+    width: 100%;
+    height: calc(100% - 80px);
+    padding: 20px 32px;
+    display: flex;
+    gap: 20px;
+    background-color: #f4f4f4;
+
+    @keyframes fadeInAnimation {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    animation: fadeInAnimation ease 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+
+    section {
+        flex: 1;
+        border-radius: 8px;
+        background-color: #fff;
+        padding: 12px;
+        color: #333;
+
+        h3 {
+            color: rgb(42, 64, 102);
+        }
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        height: 100%;
+        flex: 4;
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            flex: 0.8;
+            gap: 20px;
+
+            .valueDeals {}
+
+            .contacts {}
+
+            .topCustomers {}
+        }
+
+        .center {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            flex: 1;
+            gap: 20px;
+
+            .incomeDevelopment {}
+
+            .leadsByStatus {}
+        }
+
+        .bottom {
+            width: 100%;
+            flex: 1.2;
+            display: flex;
+
+            .documents {}
+        }
+    }
+
+    .right {
+        flex: 1;
+        display: flex;
+    }
+}

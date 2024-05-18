@@ -5,35 +5,35 @@
       "person": "Max Mustermann",
       "company": "Max Mustermann GmbH",
       "money": 2200,
-      "status": "Offer Made"
+      "status": "In Development"
     },
     {
       "id": "2",
       "person": "Max Mustermann",
       "company": "Max Mustermann GmbH",
       "money": 2200,
-      "status": ""
+      "status": "Offer Made"
     },
     {
       "id": "3",
       "person": "Max Mustermann",
       "company": "Max Mustermann GmbH",
       "money": 2200,
-      "status": "In Development"
+      "status": "Qualified Lead"
     },
     {
       "id": "4",
       "person": "Max Mustermann",
       "company": "Max Mustermann GmbH",
       "money": 2200,
-      "status": "In Development"
+      "status": "Negotiation Started"
     },
     {
       "id": "5",
       "person": "Max Mustermann",
       "company": "Max Mustermann GmbH",
       "money": 2200,
-      "status": "Negotiation Started"
+      "status": "Contact Made"
     },
     {
       "id": "6",
@@ -47,14 +47,21 @@
       "person": "Max Mustermann",
       "company": "Max Mustermann GmbH",
       "money": 2200,
-      "status": "Qualified Lead"
+      "status": "Contact Made"
     },
     {
       "id": "8",
       "person": "Max Mustermann",
       "company": "Max Mustermann GmbH",
       "money": 2200,
-      "status": "Contact Made"
+      "status": "Offer Made"
+    },
+    {
+      "id": "9",
+      "person": "Max Mustermann",
+      "company": "Max Mustermann GmbH",
+      "money": 2200,
+      "status": "In Development"
     }
   ]
 }

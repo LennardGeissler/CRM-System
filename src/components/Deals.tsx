@@ -6,6 +6,8 @@ import './Deals.scss';
 const Deals = () => {
     const [view, setView] = useState('board');
     const [cards, setCards] = useState<Customer[]>([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [newCard, setNewCard] = useState({ person: '', company: '', money: 0, status: statuses[0] });
 
     const columns = statuses.map((status) => {
         const cardsInColumn = cards.filter((card) => card.status === status);
@@ -74,9 +76,7 @@ const Deals = () => {
     const showListView = () => {
         return (
             <div className="list">
-                {cards.map((card) => (
-                    <Card key={card.id} card={card} updateCard={updateCard} />
-                ))}
+
             </div>
         );
     }
@@ -88,6 +88,25 @@ const Deals = () => {
             </div>
         );
     }
+
+    const addCard = (e: React.FormEvent) => {
+        e.preventDefault();
+        const newCardWithId = {
+            ...newCard,
+            id: (cards.length + 1).toString(),
+        };
+        fetch('http://localhost:3000/cards', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newCardWithId)
+        }).then(() => {
+            setCards([...cards, newCardWithId]);
+            setIsModalOpen(false);
+            setNewCard({ person: '', company: '', money: 0, status: statuses[0] });
+        });
+    };
 
     return (
         <div className="deals">
@@ -110,13 +129,45 @@ const Deals = () => {
                     </button>
                 </div>
 
-                <button className="add-card">
+                <button className="add-card" onClick={() => setIsModalOpen(true)}>
                     + Deal
                 </button>
             </div>
             {view === "board" ? showBoardView() : ""}
             {view === "list" ? showListView() : ""}
             {view === "table" ? showTableView() : ""}
+            {isModalOpen && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <span className="close" onClick={() => setIsModalOpen(false)}>&times;</span>
+                        <h2>Add a Deal</h2>
+                        <form onSubmit={addCard}>
+                            <label>
+                                <p>Person:</p>
+                                <input type="text" value={newCard.person} onChange={(e) => setNewCard({ ...newCard, person: e.target.value })} required />
+                            </label>
+                            <label>
+                                <p>Company:</p>
+                                <input type="text" value={newCard.company} onChange={(e) => setNewCard({ ...newCard, company: e.target.value })} required />
+                            </label>
+                            <label>
+                                <p>Money:</p>
+                                <input type="number" value={newCard.money} onChange={(e) => setNewCard({ ...newCard, money: parseInt(e.target.value) })} required />
+                            </label>
+                            <label>
+                                <p>Status:</p>
+                                <select value={newCard.status} onChange={(e) => setNewCard({ ...newCard, status: e.target.value as Status })}>
+                                    {statuses.map(status => (
+                                        <option key={status} value={status}>{status}</option>
+                                    ))}
+                                </select>
+                            </label>
+                            <div className="line"></div>
+                            <button type="submit">Add Card</button>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

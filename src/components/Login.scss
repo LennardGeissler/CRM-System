@@ -15,19 +15,19 @@
         text-align: center;
         font-size: 40px;
         margin-bottom: 12px;
-        color: rgba($color: #fff, $alpha: 0.95);
+        color: rgba($color: rgb(42, 64, 102), $alpha: 0.95);
     }
 
     p {
         text-align: center;
         margin-bottom: 80px;
-        color: rgba($color: #fff, $alpha: 0.95);
+        color: rgba($color: rgb(42, 64, 102), $alpha: 0.95);
     }
 
     form {
         display: block;
 
-        .email,
+        .name,
         .password {
             display: flex;
             justify-content: space-between;
@@ -57,10 +57,10 @@
                 height: 64px;
                 background-color: transparent;
                 //border-radius: 32px;
-                border: 1px solid rgba($color: #fff, $alpha: 0.6);
+                border: 1px solid rgba($color: #333, $alpha: 0.6);
                 box-shadow: 0px 0px 12px 2px rgba(255, 255, 255, 0.02);
                 padding: 16px;
-                color: rgba($color: #fff, $alpha: 0.4);
+                color: rgba($color: rgb(42, 64, 102), $alpha: 0.4);
                 font-size: 16px;
             }
         }
