@@ -47,7 +47,7 @@
       "person": "Max Mustermann",
       "company": "Max Mustermann GmbH",
       "money": 2200,
-      "status": "Contact Made"
+      "status": "In Development"
     },
     {
       "id": "8",
@@ -61,7 +61,7 @@
       "person": "Max Mustermann",
       "company": "Max Mustermann GmbH",
       "money": 2200,
-      "status": "In Development"
+      "status": "Contact Made"
     }
   ]
 }

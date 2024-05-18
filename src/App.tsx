@@ -1,29 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import Header from "./components/Header/Header.tsx";
-import SideBar from "./components/SideBar/SideBar.tsx";
-import Deals from "./components/Deals/Deals.tsx";
-import Login from "./components/Login/Login.tsx";
-import Dashboard from "./components/Dashboard/Dashboard.tsx";
+import Header from './layouts/Header/Header.tsx';
+import SideBar from './layouts/SideBar/SideBar.tsx';
+import Deals from "./pages/Deals/Deals.tsx";
+import Login from "./pages/Login/Login.tsx";
+import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import './App.scss';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <SideBar></SideBar>
-//       <div className="right">
-//         <Header></Header>
-//         <Router>
-//           <Routes>
-//             <Route path="/dashboard" element={<Dashboard />}/>
-//             <Route path="/deals" element={<Deals />} />
-//             <Route path="/login" element={<Login />}/>
-//           </Routes>
-//         </Router>
-//       </div>
-//     </div>
-//   )
-// }
 
 function App() {
   return (

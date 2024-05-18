@@ -1,6 +1,6 @@
 // Card.js
 import React, { useState } from 'react';
-import { Customer } from '../../data-card';
+import { Customer } from '../../utils/data-card';
 import './Card.scss';
 
 const Card = ({ card, updateCard }: { card: Customer, updateCard: (card: Customer) => void }) => {
