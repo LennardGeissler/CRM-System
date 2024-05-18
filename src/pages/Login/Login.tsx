@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./Login.scss";
 
-const Login = () => {
+interface LoginProps {
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Login: React.FC<LoginProps> = ({ setIsLoggedIn }) => {
     const [loggedIn, setLoggedIn] = useState(false)
     const [submitted, setSubmitted] = useState(false);
     const [nameInput, setNameInput] = useState('');
@@ -24,10 +28,11 @@ const Login = () => {
                 }),
             });
             const data = await response.json();
-            console.log('Response data:', data);
 
             if (data.success) {
                 setLoggedIn(true);
+                setIsLoggedIn(true);
+                localStorage.setItem('authToken', 'your-token'); // Assuming the token is hardcoded for this example
             } else {
                 setIsName(false);
                 setIsPassword(false);

@@ -138,15 +138,13 @@ app.get("/", (req, res, next) => {
 
 app.post('/', (req, res) => {
   const { name, password } = req.body;
-  console.log("Post-Test", name, password);
-
   const request = new sql.Request();
   request.input('name', sql.VarChar, name);
   request.input('password', sql.VarChar, password);
   
   const query = `SELECT * FROM dbo.Mitarbeiter WHERE Name = @name AND HashedPasswort = @password`;
 
-  request.query(query, [name, password], (err, result) => {
+  request.query(query, (err, result) => {
     console.log(query);
     if (err) {
       console.log("Error");

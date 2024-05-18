@@ -8,28 +8,43 @@ import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Calendar from "./pages/Calendar/Calendar.tsx";
 import './App.scss';
 
-function App() {
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Check if user is logged in, for example by checking a token in localStorage
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   return (
     <Router>
-      <MainContent />
+      <MainContent isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
     </Router>
   );
 }
 
-function MainContent() {
+interface MainContentProps {
+  isLoggedIn: boolean;
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const MainContent: React.FC<MainContentProps> = ({ isLoggedIn, setIsLoggedIn }) => {
   const location = useLocation();
   const isLoginRoute = location.pathname === '/login';
 
   return (
     <div className="App">
-      {!isLoginRoute && <SideBar />}
+      {isLoggedIn && !isLoginRoute && <SideBar />}
       <div className="right">
-        {!isLoginRoute && <Header />}
+        {isLoggedIn && !isLoginRoute && <Header />}
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/deals" element={<Deals />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/dashboard" element={isLoggedIn ? <Dashboard /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/deals" element={isLoggedIn ? <Deals /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/calendar" element={isLoggedIn ? <Calendar /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
         </Routes>
       </div>
     </div>
