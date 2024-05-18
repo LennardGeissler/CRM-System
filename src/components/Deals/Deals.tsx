@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Card from "./Card.tsx";
-import { Customer, Status, statuses } from "../data-card.ts";
+import Card from "../Card/Card.tsx";
+import { Customer, Status, statuses } from "../../data-card.ts";
 import './Deals.scss';
 
 const Deals = () => {

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import Header from "./components/Header.tsx";
-import SideBar from "./components/SideBar.tsx";
-import Deals from "./components/Deals.tsx";
-import Login from "./components/Login.tsx";
-import Dashboard from "./components/Dashboard.tsx";
+import Header from "./components/Header/Header.tsx";
+import SideBar from "./components/SideBar/SideBar.tsx";
+import Deals from "./components/Deals/Deals.tsx";
+import Login from "./components/Login/Login.tsx";
+import Dashboard from "./components/Dashboard/Dashboard.tsx";
 import './App.scss';
 
 // function App() {
