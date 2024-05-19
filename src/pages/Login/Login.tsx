@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Login.scss";
 
 interface LoginProps {
-    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+    handleLogin: () => void;
 }
 
-const Login: React.FC<LoginProps> = ({ setIsLoggedIn }) => {
-    const [loggedIn, setLoggedIn] = useState(false)
+const Login: React.FC<LoginProps> = ({ handleLogin }) => {
+    const navigate = useNavigate();
     const [submitted, setSubmitted] = useState(false);
     const [nameInput, setNameInput] = useState('');
     const [isName, setIsName] = useState(false);
@@ -28,11 +29,11 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn }) => {
                 }),
             });
             const data = await response.json();
+            console.log(data);
 
             if (data.success) {
-                setLoggedIn(true);
-                setIsLoggedIn(true);
-                localStorage.setItem('authToken', 'your-token'); // Assuming the token is hardcoded for this example
+                handleLogin();
+                navigate('/deals'); // Assuming the token is hardcoded for this example
             } else {
                 setIsName(false);
                 setIsPassword(false);
@@ -46,46 +47,47 @@ const Login: React.FC<LoginProps> = ({ setIsLoggedIn }) => {
 
     const handleNameInput = (e: any) => {
         setNameInput(e.target.value);
+        setIsName(!!e.target.value);
     }
 
     const handlePasswordInput = (e: any) => {
         setPasswordInput(e.target.value);
+        setIsPassword(!!e.target.value);
     }
 
     return (
         <div>
-            {!loggedIn ?
-                <section className="login">
-                    <h1>Welcome back!</h1>
-                    <p>Log in to your account to continue</p>
-                    <form action="">
-                        <div className="name">
-                            <div>
-                                <span className="material-symbols-outlined">
-                                    mail
-                                </span>
-                            </div>
-                            <input type="text" name="name" id="name" placeholder="Max Mustermann" onChange={handleNameInput} value={nameInput} style={{ border: (submitted && !isName) ? '1px solid red' : (submitted && isName) ? '1px solid green' : '' }} />
+            <section className="login">
+                <h1>Welcome back!</h1>
+                <p>Log in to your account to continue</p>
+                <form action="">
+                    <div className="name">
+                        <div>
+                            <span className="material-symbols-outlined">
+                                mail
+                            </span>
                         </div>
+                        <input type="text" name="name" id="name" placeholder="Max Mustermann" onChange={handleNameInput} value={nameInput} style={{ border: (submitted && !isName) ? '1px solid red' : (submitted && isName) ? '1px solid green' : '' }} />
+                    </div>
 
-                        <div className="password">
-                            <div>
-                                <span className="material-symbols-outlined">
-                                    lock
-                                </span>
-                            </div>
-                            <input type="password" name="password" id="password" placeholder="passwort123" onChange={handlePasswordInput} value={passwordInput} style={{ border: (submitted && !isPassword) ? '1px solid red' : (submitted && isPassword) ? '1px solid green' : '' }} />
+                    <div className="password">
+                        <div>
+                            <span className="material-symbols-outlined">
+                                lock
+                            </span>
                         </div>
+                        <input type="password" name="password" id="password" placeholder="passwort123" onChange={handlePasswordInput} value={passwordInput} style={{ border: (submitted && !isPassword) ? '1px solid red' : (submitted && isPassword) ? '1px solid green' : '' }} />
+                    </div>
 
-                        <button onClick={handleClick} type="button">Log In</button>
-                        {submitted && !isName ? <span style={{ display: "block", marginTop: 10 }}>Invalid name!</span> : ''}
-                        {submitted && !isPassword ? <span style={{ display: "block", marginTop: 10 }}>Invalid password!</span> : ''}
-                    </form>
+                    <button onClick={handleClick} type="button">Log In</button>
+                    {submitted && !isName ? <span style={{ display: "block", marginTop: 10 }}>Invalid name!</span> : ''}
+                    {submitted && !isPassword ? <span style={{ display: "block", marginTop: 10 }}>Invalid password!</span> : ''}
+                </form>
 
-                    <div className="line"></div>
+                <div className="line"></div>
 
 
-                </section> : location.href = "/deals"}
+            </section>
         </div>
     );
 }

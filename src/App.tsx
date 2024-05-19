@@ -6,51 +6,74 @@ import Deals from "./pages/Deals/Deals.tsx";
 import Login from "./pages/Login/Login.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Calendar from "./pages/Calendar/Calendar.tsx";
+import GenerateSessionToken from "./utils/SessionToken.tsx";
 import './App.scss';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [sessionToken, setSessionToken] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check if user is logged in, for example by checking a token in localStorage
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      setIsLoggedIn(true);
+    const token = sessionStorage.getItem('sessionToken');
+    const lastActivity = sessionStorage.getItem('lastActivity');
+
+    if (token && lastActivity) {
+      const expirationTime = new Date(parseInt(lastActivity, 10) + 30 * 60 * 1000); // 30 minutes in milliseconds
+      const currentTime = new Date();
+
+      if (currentTime < expirationTime) {
+        // Session still valid, update last activity time
+        sessionStorage.setItem('lastActivity', currentTime.getTime().toString());
+        setSessionToken(token);
+      } else {
+        // Session expired, logout
+        sessionStorage.removeItem('sessionToken');
+        sessionStorage.removeItem('lastActivity');
+        setSessionToken(null);
+      }
     }
   }, []);
 
+  const handleLogin = () => {
+    const token = GenerateSessionToken(32); // Generate a session token
+    const currentTime = new Date();
+    sessionStorage.setItem('sessionToken', token);
+    sessionStorage.setItem('lastActivity', currentTime.getTime().toString());
+    setSessionToken(token);
+  };
+
   const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    setIsLoggedIn(false);
+    sessionStorage.removeItem('sessionToken');
+    sessionStorage.removeItem('lastActivity');
+    setSessionToken(null);
   };
 
   return (
     <Router>
-      <MainContent isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} handleLogout={handleLogout} />
+      <MainContent sessionToken={sessionToken} handleLogin={handleLogin} handleLogout={handleLogout} />
     </Router>
   );
 }
 
 interface MainContentProps {
-  isLoggedIn: boolean;
-  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  sessionToken: string | null;
+  handleLogin: () => void;
   handleLogout: () => void;
 }
 
-const MainContent: React.FC<MainContentProps> = ({ isLoggedIn, setIsLoggedIn, handleLogout }) => {
+const MainContent: React.FC<MainContentProps> = ({ sessionToken, handleLogin, handleLogout }) => {
   const location = useLocation();
   const isLoginRoute = location.pathname === '/login';
 
   return (
     <div className="App">
-      {isLoggedIn && !isLoginRoute && <SideBar handleLogout={handleLogout}/>}
+      {sessionToken && !isLoginRoute && <SideBar handleLogout={handleLogout}/>}
       <div className="right">
-        {isLoggedIn && !isLoginRoute && <Header />}
+        {sessionToken && !isLoginRoute && <Header />}
         <Routes>
-          <Route path="/dashboard" element={isLoggedIn ? <Dashboard /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
-          <Route path="/deals" element={isLoggedIn ? <Deals /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
-          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-          <Route path="/calendar" element={isLoggedIn ? <Calendar /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/dashboard" element={sessionToken ? <Dashboard /> : <Login handleLogin={handleLogin} />} />
+          <Route path="/deals" element={sessionToken ? <Deals /> : <Login handleLogin={handleLogin} />} />
+          <Route path="/login" element={<Login handleLogin={handleLogin} />} />
+          <Route path="/calendar" element={sessionToken ? <Calendar /> : <Login handleLogin={handleLogin} />} />
         </Routes>
       </div>
     </div>

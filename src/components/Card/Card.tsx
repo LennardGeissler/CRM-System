@@ -21,7 +21,7 @@ const Card = ({ card, updateCard }: { card: Customer, updateCard: (card: Custome
                     <span className="material-symbols-outlined">
                         account_circle
                     </span>
-                    <p>€ {card.Wert.toLocaleString()}</p>
+                    <p>{card.Wert.toLocaleString()} €</p>
                 </div>
             </div>
             <button className="action">
