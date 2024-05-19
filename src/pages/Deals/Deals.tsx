@@ -93,7 +93,19 @@ const Deals = () => {
     const showListView = () => {
         return (
             <div className="list">
-
+                {columns.map(column => (
+                    <div key={column.status} onDrop={(e) => handleDrop(e, column.status)} onDragOver={(e) => e.preventDefault()} className="list-column">
+                        <h2>{column.status}</h2>
+                        <div className="list-cards">
+                            {column.cards.map(card => (
+                                <div key={card.KundenID} draggable onDragStart={(e) => handleDragStart(e, card.KundenID)}>
+                                    <Card card={card} updateCard={updateCard} />
+                                </div>
+                            ))}
+                        </div>
+                        <div className="line"></div>
+                    </div>
+                ))}
             </div>
         );
     }
