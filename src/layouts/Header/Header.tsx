@@ -4,6 +4,24 @@ import './Header.scss';
 const Header = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [pathname, setPathname] = useState(window.location.pathname);
+    const [employee, setEmployee] = useState([]);
+
+    useEffect(() => {
+        const fetchConnectionData = async () => {
+            try {
+                const response = await fetch('http://localhost:3000');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setEmployee(data.recordset);
+            } catch (error) {
+                console.error('There was an error fetching the connection data!', error);
+            }
+        };
+
+        fetchConnectionData();
+    }, []);
 
     const handleInputChange = (event: any) => {
         setSearchTerm(event.target.value);
