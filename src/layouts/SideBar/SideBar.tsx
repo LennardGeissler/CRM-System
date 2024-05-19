@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import './SideBar.scss';
 
-const SideBar = () => {
+interface SideBarProps {
+    handleLogout: () => void;
+}
+
+const SideBar: React.FC<SideBarProps> = ({ handleLogout }) => {
     const [pathname, setPathname] = useState(window.location.pathname);
 
     useEffect(() => {
@@ -96,7 +100,7 @@ const SideBar = () => {
                                 </a>
                             </li>
                             <li>
-                                <a href="/login">
+                                <a href="/login" onClick={handleLogout}>
                                     <span className="material-symbols-outlined">
                                         logout
                                     </span>

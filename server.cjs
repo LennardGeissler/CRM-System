@@ -136,12 +136,28 @@ app.get("/", (req, res, next) => {
 
 });
 
+app.get("/deals", (req, res, next) => {
+  const query = "SELECT * FROM dbo.Kunden";
+
+  var request = new sql.Request();
+  request.query(query, (err, rows) => {
+    if (err) {
+      console.log(err);
+    } else if (rows) {
+      res.json(rows);
+    } else {
+      res.send("nothing here");
+    }
+  });
+
+});
+
 app.post('/', (req, res) => {
   const { name, password } = req.body;
   const request = new sql.Request();
   request.input('name', sql.VarChar, name);
   request.input('password', sql.VarChar, password);
-  
+
   const query = `SELECT * FROM dbo.Mitarbeiter WHERE Name = @name AND HashedPasswort = @password`;
 
   request.query(query, (err, result) => {
@@ -158,6 +174,51 @@ app.post('/', (req, res) => {
         console.log("Not Successful");
         return res.status(401).json({ success: false, message: 'Invalid credentials' });
       }
+    }
+  });
+});
+
+app.post('/deals', async (req, res) => {
+  const { Kundenname, Unternehmen, Wert, Status } = req.body;
+  console.log(Kundenname, Unternehmen, Wert, Status);
+
+  const request = new sql.Request();
+
+  request.input('Kundenname', sql.VarChar, Kundenname);
+  request.input('Unternehmen', sql.VarChar, Unternehmen);
+  request.input('Wert', sql.VarChar, Wert);
+  request.input('Status', sql.VarChar, Status);
+
+  const query = 'INSERT INTO dbo.Kunden (Kundenname, Unternehmen, Wert, Status) VALUES (@Kundenname, @Unternehmen, @Wert, @Status)';
+
+  request.query(query, (err, result) => {
+    if (err) {
+      console.log("Error");
+      console.error('Error executing login query:', err);
+      return res.status(500).json({ success: false, message: 'Internal server error' });
+    } else {
+      return res.status(201).json({ success: true, message: 'Deal added successfully' });
+    }
+  })
+});
+
+app.put('/deals/:KundenID', (req, res) => {
+  const { KundenID, Status } = req.body;
+  const request = new sql.Request();
+
+  request.input('KundenID', sql.Int, parseInt(KundenID));
+  request.input('Status', sql.VarChar, Status);
+  console.log(KundenID, Status)
+
+  const query = "UPDATE dbo.Kunden SET Status = @Status WHERE KundenID = @KundenID";
+
+
+  request.query(query, (err, result) => {
+    if (err) {
+      console.error('Error updating card:', err);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    } else {
+      res.status(200).json({ success: true, message: 'Card updated successfully' });
     }
   });
 });

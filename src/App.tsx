@@ -19,9 +19,14 @@ const App = () => {
     }
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    setIsLoggedIn(false);
+  };
+
   return (
     <Router>
-      <MainContent isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <MainContent isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} handleLogout={handleLogout} />
     </Router>
   );
 }
@@ -29,15 +34,16 @@ const App = () => {
 interface MainContentProps {
   isLoggedIn: boolean;
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  handleLogout: () => void;
 }
 
-const MainContent: React.FC<MainContentProps> = ({ isLoggedIn, setIsLoggedIn }) => {
+const MainContent: React.FC<MainContentProps> = ({ isLoggedIn, setIsLoggedIn, handleLogout }) => {
   const location = useLocation();
   const isLoginRoute = location.pathname === '/login';
 
   return (
     <div className="App">
-      {isLoggedIn && !isLoginRoute && <SideBar />}
+      {isLoggedIn && !isLoginRoute && <SideBar handleLogout={handleLogout}/>}
       <div className="right">
         {isLoggedIn && !isLoginRoute && <Header />}
         <Routes>

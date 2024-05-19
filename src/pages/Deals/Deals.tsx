@@ -7,10 +7,10 @@ const Deals = () => {
     const [view, setView] = useState('board');
     const [cards, setCards] = useState<Customer[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [newCard, setNewCard] = useState({ person: '', company: '', money: 0, status: statuses[0] });
+    const [newCard, setNewCard] = useState({ Kundenname: '', Unternehmen: '', Wert: 0, Status: statuses[0] });
 
     const columns = statuses.map((status) => {
-        const cardsInColumn = cards.filter((card) => card.status === status);
+        const cardsInColumn = cards.filter((card) => card.Status === status);
         return {
             status,
             cards: cardsInColumn,
@@ -18,41 +18,56 @@ const Deals = () => {
     })
 
     useEffect(() => {
-        fetch('http://localhost:3000/cards').then((res) => res.json()).then((data) => {
-            setCards(data);
-        })
+        const fetchConnectionData = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/deals');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setCards(data.recordset);
+            } catch (error) {
+                console.error('There was an error fetching the connection data!', error);
+            }
+        };
+
+        fetchConnectionData();
     }, []);
 
-    const updateCard = (card: Customer) => {
-        fetch(`http://localhost:3000/cards/${card.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(card)
-        })
-        const updatedTasks = cards.map((t) => {
-            return t.id === card.id ? card : t
-        })
-        setCards(updatedTasks)
-    }
+    const updateCard = async (card: Customer) => {
+        try {
+            const response = await fetch(`http://localhost:3000/deals/${card.KundenID}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(card)
+            });
 
-    const handleDrop = (e: React.DragEvent<HTMLDivElement>, status: Status) => {
-        e.preventDefault()
-        setCurrentlyHoveringOver(null)
-        const id = e.dataTransfer.getData("id")
-        const card = cards.find((card) => card.id === id)
-        if (card) {
-            updateCard({ ...card, status })
+            if (!response.ok) {
+                throw new Error('Failed to update card');
+            }
+
+            setCards((cards) => cards.map(c => (c.KundenID === card.KundenID ? card : c)));
+        } catch (error) {
+            console.error('Error updating card:', error)
         }
     }
 
-    const [currentlyHoveringOver, setCurrentlyHoveringOver] = useState<Status | null>(null)
-    const handleDragEnter = (status: Status) => {
-        setCurrentlyHoveringOver(status)
+    const handleDrop = async (e: React.DragEvent<HTMLDivElement>, status: Status) => {
+        e.preventDefault();
+        const cardID = e.dataTransfer.getData("KundenID");
+        const card = cards.find((card) => card.KundenID == cardID)
+        if (card) {
+            await updateCard({ ...card, Status: status })
+        }
     }
 
-    const changeView = (selectedView: any) => {
+    const handleDragStart = (e: React.DragEvent<HTMLDivElement>, KundenID: string) => {
+        e.dataTransfer.setData("KundenID", KundenID.toString());
+    }
+
+    const changeView = (selectedView: string) => {
         setView(selectedView);
     };
 
@@ -60,11 +75,13 @@ const Deals = () => {
         return (
             <div className="board">
                 {columns.map(column => (
-                    <div onDrop={(e) => handleDrop(e, column.status)} onDragOver={(e) => e.preventDefault()} onDragEnter={() => handleDragEnter(column.status)} className="column">
+                    <div key={column.status} onDrop={(e) => handleDrop(e, column.status)} onDragOver={(e) => e.preventDefault()} className="column">
                         <h2>{column.status}</h2>
                         <div className="">
                             {column.cards.map(card => (
-                                <Card key={card.id} card={card} updateCard={updateCard} />
+                                <div key={card.KundenID} draggable onDragStart={(e) => handleDragStart(e, card.KundenID)}>
+                                    <Card card={card} updateCard={updateCard} />
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -89,23 +106,32 @@ const Deals = () => {
         );
     }
 
-    const addCard = (e: React.FormEvent) => {
+    const addCard = async (e: React.FormEvent) => {
         e.preventDefault();
-        const newCardWithId = {
-            ...newCard,
-            id: (cards.length + 1).toString(),
-        };
-        fetch('http://localhost:3000/cards', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newCardWithId)
-        }).then(() => {
+        try {
+            const response = await fetch('http://localhost:3000/deals', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newCard)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to add card');
+            }
+
+            const data = await response.json();
+            // Assuming your backend returns the newly added card with an ID
+            const newCardWithId = { ...newCard, KundenID: data.KundenID };
+
             setCards([...cards, newCardWithId]);
             setIsModalOpen(false);
-            setNewCard({ person: '', company: '', money: 0, status: statuses[0] });
-        });
+            setNewCard({ Kundenname: '', Unternehmen: '', Wert: 0, Status: statuses[0] });
+        } catch (error) {
+            console.error('Error adding card:', error);
+            // Handle error (e.g., show error message to the user)
+        }
     };
 
     return (
@@ -144,19 +170,19 @@ const Deals = () => {
                         <form onSubmit={addCard}>
                             <label>
                                 <p>Person:</p>
-                                <input type="text" value={newCard.person} onChange={(e) => setNewCard({ ...newCard, person: e.target.value })} required />
+                                <input type="text" value={newCard.Kundenname} onChange={(e) => setNewCard({ ...newCard, Kundenname: e.target.value })} required />
                             </label>
                             <label>
                                 <p>Company:</p>
-                                <input type="text" value={newCard.company} onChange={(e) => setNewCard({ ...newCard, company: e.target.value })} required />
+                                <input type="text" value={newCard.Unternehmen} onChange={(e) => setNewCard({ ...newCard, Unternehmen: e.target.value })} required />
                             </label>
                             <label>
                                 <p>Money:</p>
-                                <input type="number" value={newCard.money} onChange={(e) => setNewCard({ ...newCard, money: parseInt(e.target.value) })} required />
+                                <input type="number" value={newCard.Wert} onChange={(e) => setNewCard({ ...newCard, Wert: parseInt(e.target.value) })} required />
                             </label>
                             <label>
                                 <p>Status:</p>
-                                <select value={newCard.status} onChange={(e) => setNewCard({ ...newCard, status: e.target.value as Status })}>
+                                <select value={newCard.Status} onChange={(e) => setNewCard({ ...newCard, Status: e.target.value as Status })}>
                                     {statuses.map(status => (
                                         <option key={status} value={status}>{status}</option>
                                     ))}
