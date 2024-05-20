@@ -11,7 +11,7 @@ rl.question(' Passwort: ', async (password) => {
     try {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        console.log('Gehashtes Passwort:', hashedPassword, "!");
+        console.log('Gehashtes Passwort:', hashedPassword);
     } catch (err) {
         console.error('Fehler beim Hashen :', err);
     }
