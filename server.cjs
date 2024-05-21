@@ -141,6 +141,48 @@ app.put('/deals/:KundenID', (req, res) => {
   });
 });
 
+app.get('/leadsByStatus', (req, res) => {
+  const query = "SELECT Status, COUNT(*) as count FROM dbo.Kunden GROUP BY Status";
+  const request = new sql.Request();
+  request.query(query, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send(err.message);
+    } else {
+      res.json(result.recordset);
+    }
+  });
+});
+
+app.get('/leadDevelopmentData', (req, res) => {
+  const query = "SELECT MonthYear, TargetLeads, ActualLeads FROM MonthlyData ORDER BY MonthYear ASC OFFSET 0 ROWS FETCH NEXT 12 ROWS ONLY";
+  const request = new sql.Request();
+  request.query(query, (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    } else {
+      console.log(result.recordset)
+      res.json(result.recordset);
+    }
+  });
+});
+
+app.get('/incomeDevelopmentData', (req, res) => {
+  const query = "SELECT MonthYear, Income FROM MonthlyData ORDER BY MonthYear ASC OFFSET 0 ROWS FETCH NEXT 12 ROWS ONLY";
+  const request = new sql.Request();
+  request.query(query, (err, result) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    } else {
+      console.log(result.recordset)
+      res.json(result.recordset);
+    }
+  });
+});
+
+
 const port = 3000;
 app.listen(port, () => {
   console.log(`Server listen on port ${port}`);

@@ -1,10 +1,13 @@
 .dashboard {
     width: 100%;
     height: calc(100% - 80px);
-    padding: 20px 32px;
-    display: flex;
-    gap: 20px;
+    padding: 20px;
     background-color: #f4f4f4;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
 
     @keyframes fadeInAnimation {
         0% {
@@ -21,62 +24,112 @@
     animation-fill-mode: forwards;
 
     section {
-        flex: 1;
-        border-radius: 8px;
+        box-sizing: border-box;
         background-color: #fff;
+        border-radius: 8px;
         padding: 12px;
-        color: #333;
+        box-shadow: 0px 0px 4px 2px rgba(#000, 0.1);
 
         h3 {
+            color: rgb(42, 64, 102);
+            margin-bottom: 12px;
+        }
+    }
+
+    .custom-tooltip {
+        background-color: #fff;
+        padding: 8px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 4px 2px rgba(#000, 0.1);
+        font-weight: 400;
+
+        .label {
+            color: rgb(42, 64, 102);
+        }
+
+        .target-leads {
+            color: #0E7496;
+        }
+
+        .actual-leads {
+            color: #00C49F;
+        }
+
+        .income {
             color: rgb(42, 64, 102);
         }
     }
 
-    main {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        width: 100%;
-        height: 100%;
-        flex: 4;
+    .line-chart-container {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
 
-        .top {
-            display: flex;
-            justify-content: space-between;
+    .valueDeals {
+        grid-area: 1 / 1 / 2 / 2;
+
+        .gauge-chart {
             width: 100%;
-            flex: 0.8;
-            gap: 20px;
-
-            .valueDeals {}
-
-            .contacts {}
-
-            .topCustomers {}
-        }
-
-        .center {
             display: flex;
-            justify-content: space-between;
-            width: 100%;
-            flex: 1;
-            gap: 20px;
+            justify-content: center;
 
-            .incomeDevelopment {}
+            svg {
+                height: 200px;
+                width: 100%;
 
-            .leadsByStatus {}
-        }
+                text {
+                    font-size: 20px !important;
+                }
+            }
 
-        .bottom {
-            width: 100%;
-            flex: 1.2;
-            display: flex;
-
-            .documents {}
         }
     }
 
-    .right {
-        flex: 1;
-        display: flex;
+    .contacts {
+        grid-area: 1 / 2 / 2 / 4;
+    }
+
+    .incomeDevelopment {
+        grid-area: 2 / 1 / 3 / 2;
+        color: rgb(42, 64, 102);
+
+        tspan {
+            font-size: 14px;
+            font-weight: 400;
+        }
+    }
+
+    .leadDevelopment {
+        grid-area: 2 / 2 / 3 / 3;
+        color: rgb(42, 64, 102);
+
+        tspan {
+            font-size: 14px;
+            font-weight: 400;
+        }
+    }
+
+    .leadsByStatus {
+        grid-area: 2 / 3 / 3 / 4;
+
+        .pie-chart-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            .recharts-legend-wrapper {
+                font-size: 15px;
+                font-weight: 400;
+                line-height: 1.5;
+            }
+        }
+    }
+
+    .documents {
+        grid-area: 3 / 1 / 4 / 4;;
+    }
+
+    .openProjects {
+        grid-area: 1 / 4 / 4 / 5;
     }
 }
