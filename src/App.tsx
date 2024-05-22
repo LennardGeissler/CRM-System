@@ -66,13 +66,14 @@ const MainContent: React.FC<MainContentProps> = ({ sessionToken, handleLogin, ha
 
   return (
     <div className="App">
-      {sessionToken && !isLoginRoute && <SideBar handleLogout={handleLogout}/>}
+      {sessionToken && !isLoginRoute && <SideBar handleLogout={handleLogout} />}
       <div className="right">
         {sessionToken && !isLoginRoute && <Header />}
         <Routes>
-        <Route path="/dashboard" element={sessionToken ? <Dashboard /> : <Login handleLogin={handleLogin} />} />
-          <Route path="/deals" element={sessionToken ? <Deals /> : <Login handleLogin={handleLogin} />} />
+          <Route path="/" element={<Login handleLogin={handleLogin} />} />
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />
+          <Route path="/dashboard" element={sessionToken ? <Dashboard /> : <Login handleLogin={handleLogin} />} />
+          <Route path="/deals" element={sessionToken ? <Deals /> : <Login handleLogin={handleLogin} />} />
           <Route path="/calendar" element={sessionToken ? <Calendar /> : <Login handleLogin={handleLogin} />} />
         </Routes>
       </div>

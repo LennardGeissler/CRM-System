@@ -45,10 +45,16 @@ const Header = () => {
         };
     }, []);
 
+    const getPageTitle = (pathname: string) => {
+        if (pathname.length > 1) {
+            return pathname[1].toUpperCase() + pathname.slice(2);
+        }
+        return 'Dashboard';
+    };
+
     return (
         <header>
-            <h1>{pathname[1].toUpperCase() + pathname.slice(2)}</h1>
-
+            <h1>{getPageTitle(pathname)}</h1>
             <form className="search-bar" onSubmit={handleSubmit}>
                 <span className="material-symbols-outlined">
                     search
