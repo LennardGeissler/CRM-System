@@ -1,0 +1,196 @@
+.documents-container {
+    width: 100%;
+    height: calc(100vh - 80px);
+    display: flex;
+
+    .folders {
+        flex: 4;
+        border: 1px solid rgb(42, 64, 102);
+    }
+
+    h2 {
+        margin: 12px;
+        font-size: 24px;
+        color: rgb(42, 64, 102);
+    }
+
+    .file-explorer {
+        margin-left: 20px;
+    }
+    
+    .line {
+        width: 100%;
+        height: 1px;
+        background-color: #2a4066;
+    }
+
+    .options {
+        flex: 4;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        border: 1px solid rgb(42, 64, 102);
+        color: rgb(42, 64, 102);
+
+        .options-inner {
+            padding: 12px;
+
+            .option {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 8px;
+
+                button {
+                    background-color: transparent;
+                    height: 20px;
+                    width: 20px;
+                    border: none;
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    transition: transform 0.25s ease;
+                }
+
+                img {
+                    width: 16px;
+                    height: 16px;
+                }
+
+                h4 {
+                    font-size: 16px;
+                }
+            }
+
+            .file-information {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 20px;
+
+                ul {
+                    width: 100%;
+                    font-weight: 500;
+
+                    li {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 32px;
+                        gap: 20px;
+                        font-size: 14px;
+
+                        p {
+                            text-align: end;
+                        }
+
+                        .column1 {
+                            width: 40%;
+                        }
+
+                        .column2 {
+                            width: 40%;
+                            
+                            .status {
+                                background-color: rgba(seagreen, 0.8);
+                                padding: 4px;
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            .person {
+                display: flex;
+                justify-content: center;
+
+                ul {
+                    width: 100%;
+                    font-weight: 500;
+
+                    li {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+                        height: 32px;
+                        gap: 20px;
+                        font-size: 14px;
+
+                        p {
+                            text-align: end;
+                        }
+
+                        .column1 {
+                            width: 40%;
+                        }
+
+                        .column2 {
+                            width: 40%;
+                            
+                            .status {
+                                background-color: rgba(#2e8b57, 0.8);
+                                padding: 4px;
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    .file-container {
+        flex: 6;
+        display: flex;
+        justify-content: center;
+
+        .file-inner {
+            width: calc(210px * 2.3);
+            height: calc(297px * 2.3);
+            border: 1px solid rgb(42, 64, 102);
+            margin-top: 24px;
+            position: relative;
+
+            .dropdown-menu {
+                position: absolute;
+                top: 0;
+                right: 0;
+                display: block;
+                width: 25%;
+                border-left: 1px solid rgb(42, 64, 102);
+                border-bottom: 1px solid rgb(42, 64, 102);
+                background-color: transparent;
+
+                button {
+                    display: block;
+                    width: 100%;
+                    height: 24px;
+                    border: none;
+                    border-radius: 0;
+                    background-color: transparent;
+                    cursor: pointer;
+                }
+
+                .toggle {
+                    height: auto;
+                    padding: 4px;
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: center;
+
+                    img {
+                        width: 20px;
+                        height: 20px;
+                    }
+                }
+            }
+
+            .current-file {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+}

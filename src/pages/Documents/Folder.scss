@@ -1,0 +1,28 @@
+.folder {
+    margin: 0 20px;
+    color: rgb(42, 64, 102);
+    cursor: pointer;
+}
+
+.folder-icon {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+
+    img {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.folder-name {
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 8px;
+    display: flex;
+}
+
+.folder-contents {
+    border-left: 1px solid #ccc;
+    padding-left: 8px;
+}

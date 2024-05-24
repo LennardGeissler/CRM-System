@@ -176,7 +176,6 @@ app.get('/incomeDevelopmentData', (req, res) => {
       console.error(err);
       res.status(500).json({ success: false, message: 'Internal server error' });
     } else {
-      console.log(result.recordset)
       res.json(result.recordset);
     }
   });

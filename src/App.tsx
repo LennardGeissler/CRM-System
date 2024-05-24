@@ -6,8 +6,10 @@ import Deals from "./pages/Deals/Deals.tsx";
 import Login from "./pages/Login/Login.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Calendar from "./pages/Calendar/Calendar.tsx";
+import Settings from "./pages/Settings/Settings.tsx";
 import GenerateSessionToken from "./utils/SessionToken.tsx";
 import './App.scss';
+import Documents from "./pages/Documents/Documents.tsx";
 
 const App = () => {
   const [sessionToken, setSessionToken] = useState<string | null>(null);
@@ -75,6 +77,8 @@ const MainContent: React.FC<MainContentProps> = ({ sessionToken, handleLogin, ha
           <Route path="/dashboard" element={sessionToken ? <Dashboard /> : <Login handleLogin={handleLogin} />} />
           <Route path="/deals" element={sessionToken ? <Deals /> : <Login handleLogin={handleLogin} />} />
           <Route path="/calendar" element={sessionToken ? <Calendar /> : <Login handleLogin={handleLogin} />} />
+          <Route path="/settings" element={sessionToken ? <Settings /> : <Login handleLogin={handleLogin} />}/>
+          <Route path="/documents" element={sessionToken ? <Documents /> : <Login handleLogin={handleLogin} />} />
         </Routes>
       </div>
     </div>
