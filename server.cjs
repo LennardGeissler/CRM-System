@@ -181,6 +181,19 @@ app.get('/incomeDevelopmentData', (req, res) => {
   });
 });
 
+app.get('/tasks', (req, res) => {
+  const query = 'SELECT * FROM dbo.Aufgaben';
+  const request = new sql.Request();
+  request.query(query, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else if (result) {
+      res.json(result.recordset);
+    } else {
+      res.send("nothing here");
+    }
+  });
+})
 
 const port = 3000;
 app.listen(port, () => {
