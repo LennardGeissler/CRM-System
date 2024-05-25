@@ -1,27 +1,14 @@
 import React, { useState, useEffect } from "react";
 import './Header.scss';
 
-const Header = () => {
+interface HeaderProps {
+    user: string | null;
+    profileImages: { [key: string]: string };
+}
+
+const Header: React.FC<HeaderProps> = ({ user, profileImages }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [pathname, setPathname] = useState(window.location.pathname);
-    const [employee, setEmployee] = useState([]);
-
-    useEffect(() => {
-        const fetchConnectionData = async () => {
-            try {
-                const response = await fetch('http://localhost:3000');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                setEmployee(data.recordset);
-            } catch (error) {
-                console.error('There was an error fetching the connection data!', error);
-            }
-        };
-
-        fetchConnectionData();
-    }, []);
 
     const handleInputChange = (event: any) => {
         setSearchTerm(event.target.value);
@@ -68,9 +55,9 @@ const Header = () => {
             </form>
 
             <div className="profile">
-                <img src="src/assets/images/lennard.png" alt="" />
+                <img src={user ? profileImages[user] : "default-profile-image-url"} alt="" /> {/* Provide a default profile image URL */}
                 <div className="info">
-                    <p className="name">Lennard Geißler</p>
+                    <p className="name">{user}</p>
                     <p className="position">CRM-Entwickler</p>
                 </div>
             </div>

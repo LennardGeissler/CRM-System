@@ -14,6 +14,7 @@ import Tasks from "./pages/Tasks/Tasks.tsx";
 
 const App = () => {
   const [sessionToken, setSessionToken] = useState<string | null>(null);
+  const [user, setUser] = useState<string | null>(null);
 
   useEffect(() => {
     const token = sessionStorage.getItem('sessionToken');
@@ -36,7 +37,8 @@ const App = () => {
     }
   }, []);
 
-  const handleLogin = () => {
+  const handleLogin = (name: string) => {
+    setUser(name);
     const token = GenerateSessionToken(32); // Generate a session token
     const currentTime = new Date();
     sessionStorage.setItem('sessionToken', token);
@@ -50,20 +52,28 @@ const App = () => {
     setSessionToken(null);
   };
 
+  const profileImages = {
+    "Lennard Geissler": "src/assets/images/lennard.png",
+    "Cedric Bergmann": "src/assets/images/cedric.png",
+    // Add more mappings as needed
+  };
+
   return (
     <Router>
-      <MainContent sessionToken={sessionToken} handleLogin={handleLogin} handleLogout={handleLogout} />
+      <MainContent user={user} sessionToken={sessionToken} handleLogin={handleLogin} handleLogout={handleLogout} profileImages={profileImages}/>
     </Router>
   );
 }
 
 interface MainContentProps {
+  user: string | null;
   sessionToken: string | null;
-  handleLogin: () => void;
+  handleLogin: (name:string) => void;
   handleLogout: () => void;
+  profileImages: { [key: string]: string }
 }
 
-const MainContent: React.FC<MainContentProps> = ({ sessionToken, handleLogin, handleLogout }) => {
+const MainContent: React.FC<MainContentProps> = ({ user, sessionToken, handleLogin, handleLogout, profileImages }) => {
   const location = useLocation();
   const isLoginRoute = location.pathname === '/login';
 
@@ -71,7 +81,7 @@ const MainContent: React.FC<MainContentProps> = ({ sessionToken, handleLogin, ha
     <div className="App">
       {sessionToken && !isLoginRoute && <SideBar handleLogout={handleLogout} />}
       <div className="right">
-        {sessionToken && !isLoginRoute && <Header />}
+        {sessionToken && !isLoginRoute && <Header user={user} profileImages={profileImages}/>}
         <Routes>
           <Route path="/" element={<Login handleLogin={handleLogin} />} />
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />

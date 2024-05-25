@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Login.scss";
 
 interface LoginProps {
-    handleLogin: () => void;
+    handleLogin: (name:string) => void;
 }
 
 const Login: React.FC<LoginProps> = ({ handleLogin }) => {
@@ -29,11 +29,10 @@ const Login: React.FC<LoginProps> = ({ handleLogin }) => {
                 }),
             });
             const data = await response.json();
-            console.log(data);
 
             if (data.success) {
-                handleLogin();
-                navigate('/deals'); // Assuming the token is hardcoded for this example
+                handleLogin(nameInput);
+                navigate('/dashboard'); // Assuming the token is hardcoded for this example
             } else {
                 setIsName(false);
                 setIsPassword(false);
