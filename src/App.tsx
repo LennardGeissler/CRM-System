@@ -12,6 +12,7 @@ import './App.scss';
 import Documents from "./pages/Documents/Documents.tsx";
 import Tasks from "./pages/Tasks/Tasks.tsx";
 import ThemeProvider from './ThemeContext';
+import Projects from "./pages/Projects/Projects.tsx";
 
 const App = () => {
   const [sessionToken, setSessionToken] = useState<string | null>(null);
@@ -97,6 +98,7 @@ const MainContent: React.FC<MainContentProps> = ({ user, sessionToken, handleLog
           <Route path="/calendar" element={sessionToken ? <Calendar /> : <Login handleLogin={handleLogin} />} />
           <Route path="/settings" element={sessionToken ? <Settings /> : <Login handleLogin={handleLogin} />} />
           <Route path="/documents" element={sessionToken ? <Documents /> : <Login handleLogin={handleLogin} />} />
+          <Route path="/projects" element={sessionToken ? <Projects /> : <Login handleLogin={handleLogin} />} />
         </Routes>
       </div>
     </div>

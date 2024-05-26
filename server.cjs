@@ -194,6 +194,62 @@ app.get('/tasks', (req, res) => {
   });
 })
 
+app.get('/projects', (req, res) => {
+  const query = 'SELECT * FROM dbo.Projekte';
+  const request = new sql.Request();
+  request.query(query, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else if (result) {
+      res.json(result.recordset);
+    } else {
+      res.send("nothing here");
+    }
+  });
+})
+
+app.post('/customerName', async (req, res) => {
+  const { rechnungsempfangerKundeID } = req.body;
+
+  const request = new sql.Request();
+
+  request.input('KundenID', sql.Int, parseInt(rechnungsempfangerKundeID));
+
+  const query = `SELECT Kundenname FROM dbo.Kunden WHERE KundenID = @KundenID`;
+
+  request.query(query, (err, result) => {
+    if (err) {
+      console.log("Error");
+      console.error('Error executing login query:', err);
+      return res.status(500).json({ success: false, message: 'Internal server error' });
+    } else {
+      console.log(result.recordset);
+      return res.status(201).json(result.recordset);
+    }
+  })
+});
+
+app.post('/employeeName', async (req, res) => {
+  const { verantwortlicherMitarbeiterID } = req.body;
+
+  const request = new sql.Request();
+
+  request.input('MitarbeiterID', sql.Int, parseInt(verantwortlicherMitarbeiterID));
+
+  const query = `SELECT Name FROM dbo.Mitarbeiter WHERE MitarbeiterID = @MitarbeiterID`;
+
+  request.query(query, (err, result) => {
+    if (err) {
+      console.log("Error");
+      console.error('Error executing login query:', err);
+      return res.status(500).json({ success: false, message: 'Internal server error' });
+    } else {
+      console.log(result.recordset);
+      return res.status(201).json(result.recordset);
+    }
+  })
+});
+
 const port = 3000;
 app.listen(port, () => {
   console.log(`Server listen on port ${port}`);

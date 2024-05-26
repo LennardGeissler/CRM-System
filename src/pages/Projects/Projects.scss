@@ -1,0 +1,110 @@
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20px;
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+        justify-content: flex-start;
+        border-radius: 8px;
+        width: calc((100% / 4) - 15px);
+        height: calc((100vh / 4) - (20px / 3));
+        position: relative;
+        perspective: 1000px;
+        padding: 0;
+        margin: 0 !important;
+        background-color: var(--surface-background);
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        &.flipped .card-inner {
+            transform: rotateX(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            box-sizing: border-box;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+
+            ul {
+                list-style: circle;
+                padding: 0;
+
+                li {
+                    margin: 5px 20px;
+                    height: 24px;
+                }
+            }
+        }
+
+        .card-back {
+            border-radius: 5px;
+            transform: rotateX(180deg);
+
+        }
+
+        h3 {
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        p {
+            margin-bottom: 8px;
+            font-size: 16px;
+
+            strong {
+                display: block;
+                font-weight: 600;
+                margin-bottom: 4px;
+            }
+        }
+
+        .status {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            width: 40%;
+            height: 34px;
+            border-radius: 8px;
+            border: none;
+            color: #fff;
+
+            div {
+                display: flex;
+                justify-content: baseline;
+                align-items: center;
+                gap: 8px;
+                padding: 4px;
+            }
+
+            span {}
+        }
+
+        .status-red {
+            background-color: rgba(#FF5F6D, 0.9);
+        }
+
+        .status-blue {
+            background-color: rgba(#FFC371, 0.9);
+        }
+
+        .status-green {
+            background-color: rgba(#00C49F, 0.9);
+        }
+    }
+}
