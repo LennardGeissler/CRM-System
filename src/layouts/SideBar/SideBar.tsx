@@ -52,13 +52,6 @@ const SideBar: React.FC<SideBarProps> = ({ handleLogout }) => {
                                 </a>
                             </li>
                             <li>
-                                <a href="/stats" className={pathname === '/stats' ? 'active' : ''}>
-                                    <span className="material-symbols-outlined">
-                                        query_stats
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
                                 <a href="/projects" className={pathname === '/projects' ? 'active' : ''}>
                                     <span className="material-symbols-outlined">
                                         deployed_code

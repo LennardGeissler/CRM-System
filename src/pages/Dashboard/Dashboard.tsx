@@ -2,13 +2,28 @@ import React, { useState, useEffect } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
 import GaugeChart from 'react-gauge-chart';
 import './Dashboard.scss';
+import ProjectCard from "./ProjectCard";
 
-const Dashboard = () => {
+interface Project {
+    ProjektID: number,
+    Matchcode: string,
+    Status: string,
+    Projektnummer: number,
+    VerantwortlicherMitarbeiterID: number,
+    RechnungsempfängerKundeID: number,
+    Aktiv: boolean,
+    Kundenname?: string,
+    Mitarbeitername?: string,
+}
+
+const Dashboard = ({ userID }: { userID: number | null }) => {
     const [leadsByStatus, setLeadsByStatus] = useState([]);
     const [leadData, setLeadData] = useState<any>([]);
     const [incomeData, setIncomeData] = useState<any>([]);
     const [targetLeads, setTargetLeads] = useState<number>(0);
     const [actualLeads, setActualLeads] = useState<number>(0);
+    const [openProjects, setOpenProjects] = useState<Project[]>([]);
+    console.log(userID);
 
     useEffect(() => {
         const fetchLeadsByStatus = async () => {
@@ -26,7 +41,6 @@ const Dashboard = () => {
                 // Fetch data from the server
                 const response = await fetch('http://localhost:3000/leadDevelopmentData');
                 const data = await response.json();
-                console.log(data)
                 setLeadData(data);
 
                 if (data.length > 0) {
@@ -49,9 +63,52 @@ const Dashboard = () => {
             }
         };
 
+        const fetchOpenProjects = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/projects');
+                const data = await response.json();
+
+                const filteredProjects = data.filter((project: Project) => {
+                    const isActive = project.Aktiv === true;
+                    const isUserMatch = project.VerantwortlicherMitarbeiterID === userID;
+                    return isActive && isUserMatch;
+                });
+
+
+                const projectsWithCustomerNames = await Promise.all(filteredProjects.map(async (project: Project) => {
+                    const customerName = await fetchCustomerName(project.RechnungsempfängerKundeID);
+                    return { ...project, Kundenname: customerName };
+                }));
+                setOpenProjects(projectsWithCustomerNames);
+            } catch (error) {
+                console.error('Error fetching open projects: ', error);
+            }
+        };
+        console.log(openProjects);
+
+        const fetchCustomerName = async (rechnungsempfängerKundeID: number) => {
+            try {
+                const response = await fetch('http://localhost:3000/customerName', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        rechnungsempfangerKundeID: rechnungsempfängerKundeID
+                    }),
+                });
+                const data = await response.json();
+                return data[0].Kundenname;
+            } catch (error) {
+                console.error('Fehler beim Abrufen des Kundenname:', error);
+                return '';
+            }
+        };
+
         fetchLeadsByStatus();
         fetchLeadData();
         fetchIncomeData();
+        fetchOpenProjects();
     }, []);
 
     if (leadData.length === 0) {
@@ -166,7 +223,7 @@ const Dashboard = () => {
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="MonthYear" tickFormatter={formatXAxis} />
                             <YAxis domain={[lowerIncomeBound, upperIncomeBound]} />
-                            <Tooltip content={<CustomIncomeTooltip />}/>
+                            <Tooltip content={<CustomIncomeTooltip />} />
                             <Line type="monotone" dataKey="Income" stroke="#00C5FF" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5, fill: '#00C5FF' }} />
                         </LineChart>
                     </ResponsiveContainer>
@@ -217,6 +274,16 @@ const Dashboard = () => {
             </section>
             <section className="openProjects">
                 <h3>Open Projects</h3>
+                <div className="cards-container">
+                    {openProjects.map((project, index) => (
+                        <ProjectCard
+                            key={index}
+                            matchcode={project.Matchcode}
+                            customerName={project.Kundenname}
+                            projectNumber={project.Projektnummer}
+                        />
+                    ))}
+                </div>
             </section>
         </div >
     );

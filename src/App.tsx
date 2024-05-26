@@ -17,11 +17,13 @@ import Projects from "./pages/Projects/Projects.tsx";
 const App = () => {
   const [sessionToken, setSessionToken] = useState<string | null>(null);
   const [user, setUser] = useState<string | null>(null);
+  const [userID, setUserID] = useState<number | null>(null);
 
   useEffect(() => {
     const token = sessionStorage.getItem('sessionToken');
     const lastActivity = sessionStorage.getItem('lastActivity');
     const storedUserName = sessionStorage.getItem('user');
+    const storedUserID = sessionStorage.getItem('userID');
 
     if (token && lastActivity) {
       const expirationTime = new Date(parseInt(lastActivity, 10) + 30 * 60 * 1000); // 30 minutes in milliseconds
@@ -32,22 +34,29 @@ const App = () => {
         sessionStorage.setItem('lastActivity', currentTime.getTime().toString());
         setSessionToken(token);
         setUser(storedUserName);
+        if (storedUserID !== null) {
+          setUserID(parseInt(storedUserID)); // Parse userID from Local Storage if not null
+        }
       } else {
         // Session expired, logout
         sessionStorage.removeItem('sessionToken');
         sessionStorage.removeItem('lastActivity');
+        sessionStorage.removeItem('userID');
         setSessionToken(null);
       }
     }
   }, []);
 
-  const handleLogin = (name: string) => {
+  const handleLogin = (name: string, userID:number) => {
     setUser(name);
+    console.log(userID);
+    setUserID(userID);
     const token = GenerateSessionToken(32); // Generate a session token
     const currentTime = new Date();
     sessionStorage.setItem('sessionToken', token);
     sessionStorage.setItem('lastActivity', currentTime.getTime().toString());
     sessionStorage.setItem('user', name);
+    sessionStorage.setItem('userID', userID.toString());
     setSessionToken(token);
   };
 
@@ -66,21 +75,22 @@ const App = () => {
   return (
     <ThemeProvider>
       <Router>
-        <MainContent user={user} sessionToken={sessionToken} handleLogin={handleLogin} handleLogout={handleLogout} profileImages={profileImages} />
+        <MainContent userID={userID} user={user} sessionToken={sessionToken} handleLogin={handleLogin} handleLogout={handleLogout} profileImages={profileImages} />
       </Router>
     </ThemeProvider>
   );
 }
 
 interface MainContentProps {
+  userID: number | null,
   user: string | null;
   sessionToken: string | null;
-  handleLogin: (name: string) => void;
+  handleLogin: (name: string, userID:number) => void;
   handleLogout: () => void;
   profileImages: { [key: string]: string }
 }
 
-const MainContent: React.FC<MainContentProps> = ({ user, sessionToken, handleLogin, handleLogout, profileImages }) => {
+const MainContent: React.FC<MainContentProps> = ({ userID, user, sessionToken, handleLogin, handleLogout, profileImages }) => {
   const location = useLocation();
   const isLoginRoute = location.pathname === '/login';
 
@@ -92,7 +102,7 @@ const MainContent: React.FC<MainContentProps> = ({ user, sessionToken, handleLog
         <Routes>
           <Route path="/" element={<Login handleLogin={handleLogin} />} />
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />
-          <Route path="/dashboard" element={sessionToken ? <Dashboard /> : <Login handleLogin={handleLogin} />} />
+          <Route path="/dashboard" element={sessionToken ? <Dashboard userID={userID} /> : <Login handleLogin={handleLogin} />} />
           <Route path="/deals" element={sessionToken ? <Deals /> : <Login handleLogin={handleLogin} />} />
           <Route path="/tasks" element={sessionToken ? <Tasks /> : <Login handleLogin={handleLogin} />} />
           <Route path="/calendar" element={sessionToken ? <Calendar /> : <Login handleLogin={handleLogin} />} />

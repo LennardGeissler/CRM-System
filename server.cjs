@@ -86,7 +86,7 @@ app.post('/', async (req, res) => {
         const user = result.recordset[0];
         const isMatch = await bcrypt.compare(password, user.HashedPasswort);
         if (isMatch) {
-          return res.json({ success: true, message: 'Login successful' });
+          return res.json({ success: true, message: 'Login successful', MitarbeiterID: user.MitarbeiterID});
         } else {
           return res.status(401).json({ success: false, message: 'Invalid credentials' });
         }
@@ -223,7 +223,6 @@ app.post('/customerName', async (req, res) => {
       console.error('Error executing login query:', err);
       return res.status(500).json({ success: false, message: 'Internal server error' });
     } else {
-      console.log(result.recordset);
       return res.status(201).json(result.recordset);
     }
   })
@@ -244,7 +243,6 @@ app.post('/employeeName', async (req, res) => {
       console.error('Error executing login query:', err);
       return res.status(500).json({ success: false, message: 'Internal server error' });
     } else {
-      console.log(result.recordset);
       return res.status(201).json(result.recordset);
     }
   })
