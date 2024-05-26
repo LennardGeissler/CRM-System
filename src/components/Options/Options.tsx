@@ -1,5 +1,6 @@
 import React from "react";
 import { Customer } from "../../utils/data-card";
+import './Options.scss';
 
 interface OptionsProps {
     view: string;
@@ -10,8 +11,8 @@ interface OptionsProps {
 
 const Options: React.FC<OptionsProps> = ({ view, changeView, setIsModalOpen, cards }) => {
     return (
-        <div className="options">
-                <div className="left">
+        <div className="options-container">
+                <div className="left-side">
                     <div className="change-view">
                         <button className={view === "board" ? "active board-view" : "board-view"} onClick={() => changeView('board')}>
                             <span className="material-symbols-outlined">
@@ -34,7 +35,7 @@ const Options: React.FC<OptionsProps> = ({ view, changeView, setIsModalOpen, car
                         + Deal
                     </button>
                 </div>
-                <div className="right">
+                <div className="right-side">
                     <div className="numbers">
                         <span>{cards.reduce((accumulator, currentCard) => accumulator + currentCard.Wert, 0).toLocaleString()} €</span>
                         <span>~</span>

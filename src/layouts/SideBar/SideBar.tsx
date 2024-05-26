@@ -58,18 +58,16 @@ const SideBar: React.FC<SideBarProps> = ({ handleLogout }) => {
                                     </span>
                                 </a>
                             </li>
-
-                            <div className="seperator">
-                                <div></div>
-                            </div>
-
                             <li>
-                                <a href="/mail" className={pathname === '/mail' ? 'active' : ''}>
+                                <a href="/projects" className={pathname === '/projects' ? 'active' : ''}>
                                     <span className="material-symbols-outlined">
-                                        mail
+                                        deployed_code
                                     </span>
                                 </a>
                             </li>
+                            <div className="seperator">
+                                <div></div>
+                            </div>
                             <li>
                                 <a href="/calendar" className={pathname === '/calendar' ? 'active' : ''}>
                                     <span className="material-symbols-outlined">

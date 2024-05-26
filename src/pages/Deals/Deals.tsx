@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Status, statuses } from "../../utils/data-card.ts";
 import UseDeals from "./UseDeals.tsx";
 import AddDeals from "./AddDeals.tsx";
-import Options from "./Options.tsx";
+import Options from "../../components/Options/Options.tsx";
 import BoardView from "./Views/BoardView.tsx";
 import ListView from "./Views/ListView.tsx";
 import TableView from "./Views/TableView.tsx";

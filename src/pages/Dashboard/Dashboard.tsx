@@ -84,7 +84,8 @@ const Dashboard = () => {
     const lowerIncomeBound = Math.floor((minIncome - bufferIncomeValue) / 1000) * 1000;
     const numIncomeTicks = Math.ceil((upperIncomeBound - lowerIncomeBound) / 1000) + 1;
 
-    const COLORS = ['#2A4066', '#1D5B7E', '#0E7496', '#009EAF', '#00C49F'];
+    //const COLORS = ['#2A4066', '#1D5B7E', '#0E7496', '#009EAF', '#00C49F'];
+    const COLORS = ['#009FFF', '#00C5FF', '#00DFFF', '#00FFDF', '#7DFFFC'];
 
     const formatXAxis = (tickItem: string) => {
         const date = new Date(tickItem);
@@ -141,15 +142,12 @@ const Dashboard = () => {
                             arcsLength={[0.3, 0.4, 0.3]}
                             colors={['#FF5F6D', '#FFC371', '#00C49F']}
                             percent={percentage / 100}
-                            needleColor="#2A4066"
-                            needleBaseColor="#2A4066"
-                            textColor="#2A4066"
                             formatTextValue={() => `${actualLeads} Deals`}
                             style={{ width: '100%', height: 150 }}
                         />
                     </ResponsiveContainer>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '-10px', color: '#2A4066', fontWeight: '400' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '-10px', fontWeight: '400' }}>
                     <span>0 Deals</span>
                     <span>{targetLeads} Deals</span>
                 </div>
@@ -169,7 +167,7 @@ const Dashboard = () => {
                             <XAxis dataKey="MonthYear" tickFormatter={formatXAxis} />
                             <YAxis domain={[lowerIncomeBound, upperIncomeBound]} />
                             <Tooltip content={<CustomIncomeTooltip />}/>
-                            <Line type="monotone" dataKey="Income" stroke="#0E7496" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5 }} />
+                            <Line type="monotone" dataKey="Income" stroke="#00C5FF" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5, fill: '#00C5FF' }} />
                         </LineChart>
                     </ResponsiveContainer>
                 </div>
@@ -183,8 +181,8 @@ const Dashboard = () => {
                             <XAxis dataKey="MonthYear" tickFormatter={formatXAxis} />
                             <YAxis domain={[lowerLeadBound, upperLeadBound]} ticks={[...Array(numLeadTicks).keys()].map(i => lowerLeadBound + i * 10)} />
                             <Tooltip content={<CustomLeadTooltip />} />
-                            <Line type="monotone" dataKey="TargetLeads" stroke="#0E7496" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5 }} />
-                            <Line type="monotone" dataKey="ActualLeads" stroke="#00C49F" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5 }} />
+                            <Line type="monotone" dataKey="TargetLeads" stroke="#00C5FF" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5, fill: '#00C5FF' }} />
+                            <Line type="monotone" dataKey="ActualLeads" stroke="#00FFDF" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5, fill: '#00FFDF' }} />
                         </LineChart>
                     </ResponsiveContainer>
                 </div>

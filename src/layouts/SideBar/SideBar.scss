@@ -4,7 +4,7 @@ aside {
     position: relative;
     margin: 0;
     padding: 0;
-    background-color: rgb(42, 64, 102);
+    background-color: var(--sidebar-background);
     font-family: 'Poppins', sans-serif;
     font-weight: 100;
     color: rgba(#fff, 0.9);

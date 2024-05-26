@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './Header.scss';
+import { useTheme } from "../../ThemeContext";
+import ToggleThemeButton from "../../ToggleThemeButton";
 
 interface HeaderProps {
     user: string | null;
@@ -7,6 +9,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ user, profileImages }) => {
+    const { theme, toggleTheme } = useTheme();
     const [searchTerm, setSearchTerm] = useState('');
     const [pathname, setPathname] = useState(window.location.pathname);
 
@@ -40,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({ user, profileImages }) => {
     };
 
     return (
-        <header>
+        <header className={theme}>
             <h1>{getPageTitle(pathname)}</h1>
             <form className="search-bar" onSubmit={handleSubmit}>
                 <span className="material-symbols-outlined">
@@ -53,6 +56,7 @@ const Header: React.FC<HeaderProps> = ({ user, profileImages }) => {
                     onChange={handleInputChange}
                 />
             </form>
+            <ToggleThemeButton />
 
             <div className="profile">
                 <img src={user ? profileImages[user] : "default-profile-image-url"} alt="" /> {/* Provide a default profile image URL */}

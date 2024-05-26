@@ -1,3 +1,65 @@
+:root {
+  --background-color-light: #f4f4f4;
+  --text-color-light: rgb(42, 64, 102);
+  --header-background-light: #fff;
+  --background-color-dark: #121212;
+  --text-color-dark: #f7f7f7;
+  --header-background-dark: #222222;
+  --surface-background-dark: #222222;
+  --surface-background-light: #fff;
+  --on-surface-light: #fff;
+  --on-surface-dark: #323232;
+  --legend-wrapper-light: #fff;
+  --legend-wrapper-dark: rgba(#fff, 1);
+  --primary: #009FFF;
+}
+
+
+
+.light {
+  --background-color: var(--background-color-light);
+  --text-color: var(--text-color-light);
+  --header-background: var(--header-background-light);
+  --surface-background: var(--surface-background-light);
+  --on-surface: var(--on-surface-light);
+  --sidebar-background: var(--text-color-light);
+  --legend-wrapper: var(--legend-wrapper-light);
+}
+
+.dark {
+  --background-color: var(--background-color-dark);
+  --text-color: var(--text-color-dark);
+  --header-background: var(--surface-background);
+  --on-surface: var(--on-surface-dark);
+  --surface-background: var(--surface-background-dark);
+  --sidebar-background: var(--surface-background-dark);
+  --legend-wrapper: var(--legend-wrapper-dark);
+}
+
+header {
+  background-color: var(--header-background);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+}
+
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-family: 'Raleway', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  
+  &::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+  }
+}
+
 .App {
   display: flex;
   width: 100%;

@@ -11,6 +11,7 @@ import GenerateSessionToken from "./utils/SessionToken.tsx";
 import './App.scss';
 import Documents from "./pages/Documents/Documents.tsx";
 import Tasks from "./pages/Tasks/Tasks.tsx";
+import ThemeProvider from './ThemeContext';
 
 const App = () => {
   const [sessionToken, setSessionToken] = useState<string | null>(null);
@@ -19,6 +20,7 @@ const App = () => {
   useEffect(() => {
     const token = sessionStorage.getItem('sessionToken');
     const lastActivity = sessionStorage.getItem('lastActivity');
+    const storedUserName = sessionStorage.getItem('user');
 
     if (token && lastActivity) {
       const expirationTime = new Date(parseInt(lastActivity, 10) + 30 * 60 * 1000); // 30 minutes in milliseconds
@@ -28,6 +30,7 @@ const App = () => {
         // Session still valid, update last activity time
         sessionStorage.setItem('lastActivity', currentTime.getTime().toString());
         setSessionToken(token);
+        setUser(storedUserName);
       } else {
         // Session expired, logout
         sessionStorage.removeItem('sessionToken');
@@ -43,6 +46,7 @@ const App = () => {
     const currentTime = new Date();
     sessionStorage.setItem('sessionToken', token);
     sessionStorage.setItem('lastActivity', currentTime.getTime().toString());
+    sessionStorage.setItem('user', name);
     setSessionToken(token);
   };
 
@@ -59,16 +63,18 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <MainContent user={user} sessionToken={sessionToken} handleLogin={handleLogin} handleLogout={handleLogout} profileImages={profileImages}/>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <MainContent user={user} sessionToken={sessionToken} handleLogin={handleLogin} handleLogout={handleLogout} profileImages={profileImages} />
+      </Router>
+    </ThemeProvider>
   );
 }
 
 interface MainContentProps {
   user: string | null;
   sessionToken: string | null;
-  handleLogin: (name:string) => void;
+  handleLogin: (name: string) => void;
   handleLogout: () => void;
   profileImages: { [key: string]: string }
 }
@@ -81,7 +87,7 @@ const MainContent: React.FC<MainContentProps> = ({ user, sessionToken, handleLog
     <div className="App">
       {sessionToken && !isLoginRoute && <SideBar handleLogout={handleLogout} />}
       <div className="right">
-        {sessionToken && !isLoginRoute && <Header user={user} profileImages={profileImages}/>}
+        {sessionToken && !isLoginRoute && <Header user={user} profileImages={profileImages} />}
         <Routes>
           <Route path="/" element={<Login handleLogin={handleLogin} />} />
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />
@@ -89,7 +95,7 @@ const MainContent: React.FC<MainContentProps> = ({ user, sessionToken, handleLog
           <Route path="/deals" element={sessionToken ? <Deals /> : <Login handleLogin={handleLogin} />} />
           <Route path="/tasks" element={sessionToken ? <Tasks /> : <Login handleLogin={handleLogin} />} />
           <Route path="/calendar" element={sessionToken ? <Calendar /> : <Login handleLogin={handleLogin} />} />
-          <Route path="/settings" element={sessionToken ? <Settings /> : <Login handleLogin={handleLogin} />}/>
+          <Route path="/settings" element={sessionToken ? <Settings /> : <Login handleLogin={handleLogin} />} />
           <Route path="/documents" element={sessionToken ? <Documents /> : <Login handleLogin={handleLogin} />} />
         </Routes>
       </div>

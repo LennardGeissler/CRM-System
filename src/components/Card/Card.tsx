@@ -6,7 +6,7 @@ import './Card.scss';
 const Card = ({ card, updateCard }: { card: Customer, updateCard: (card: Customer) => void }) => {
     const [isEditingTitle, setIsEditingTitle] = useState(false)
 
-    const handleDragStart = (e:any, id:any) => {
+    const handleDragStart = (e: any, id: any) => {
         e.dataTransfer.setData("id", id);
     };
 
@@ -26,7 +26,7 @@ const Card = ({ card, updateCard }: { card: Customer, updateCard: (card: Custome
             </div>
             <button className="action">
                 <span className="material-symbols-outlined">
-                    chevron_right
+                    arrow_circle_right
                 </span>
             </button>
         </div>
