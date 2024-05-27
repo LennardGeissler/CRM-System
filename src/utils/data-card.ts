@@ -1,4 +1,4 @@
-export type Status = 'Qualified Lead' | 'Contact Made' | 'Offer Made' | 'In Development' | 'Negotiation Started';
+export type Status = 'Qualifizierter Lead' | 'Kontakt aufgenommen' | 'Angebot gemacht' | 'In Entwicklung' | 'In Verhandlung';
 
 export type Customer = {
     KundenID: string,
@@ -8,4 +8,4 @@ export type Customer = {
     Status: Status,
 }
 
-export const statuses: Status[] = ['Qualified Lead', 'Contact Made', 'In Development', 'Offer Made', 'Negotiation Started'];
+export const statuses: Status[] = ['Qualifizierter Lead', 'Kontakt aufgenommen', 'Angebot gemacht', 'In Entwicklung', 'In Verhandlung'];

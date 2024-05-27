@@ -63,7 +63,7 @@ aside {
     
                             &:hover {
                                 background-color: rgba(132, 139, 200, 0.18);
-                                color: cornflowerblue;
+                                color: var(--primary);
                                 transition: 0.3s ease;
                                 cursor: pointer;
     
@@ -78,7 +78,7 @@ aside {
                                 height: 100%;
                                 margin: 0;
                                 padding: 0;
-                                background-color: cornflowerblue;
+                                background-color: var(--primary);
                                 transition: all 0.3s ease;
                             }
     
@@ -86,7 +86,7 @@ aside {
     
                         a.active {
                             background-color: rgba(132, 139, 200, 0.18);
-                            color: cornflowerblue;
+                            color: var(--primary);
                             transition: 0.3s ease;
                             cursor: pointer;
     
@@ -101,7 +101,7 @@ aside {
                             height: 100%;
                             margin: 0;
                             padding: 0;
-                            background-color: cornflowerblue;
+                            background-color: var(--primary);
                             transition: all 0.3s ease;
                         }
                     }

@@ -16,6 +16,32 @@ interface Project {
     Mitarbeitername?: string,
 }
 
+interface Customer {
+    KundenID: number,
+    Kundenname: string,
+    AdresseID: number,
+    Zahlungsinformationen: string,
+    Unternehmen: string,
+    Wert: number,
+    Status: 'Qualified Lead' | 'Contact Made' | 'Offer Made' | 'In Development' | 'Negotiation Started',
+    Straße?: string,
+    Hausnummer?: string,
+    Stadt?: string,
+    Region?: string,
+    Postleitzahl?: string,
+    Land?: string,
+}
+
+interface Address {
+    AdresseID: number,
+    Straße: string,
+    Hausnummer: string,
+    Stadt: string,
+    Region: string,
+    Postleitzahl: string,
+    Land: string,
+}
+
 const Dashboard = ({ userID }: { userID: number | null }) => {
     const [leadsByStatus, setLeadsByStatus] = useState([]);
     const [leadData, setLeadData] = useState<any>([]);
@@ -23,6 +49,7 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
     const [targetLeads, setTargetLeads] = useState<number>(0);
     const [actualLeads, setActualLeads] = useState<number>(0);
     const [openProjects, setOpenProjects] = useState<Project[]>([]);
+    const [customers, setCustomers] = useState<Customer[]>([]);
     console.log(userID);
 
     useEffect(() => {
@@ -105,10 +132,33 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
             }
         };
 
+        const fetchCustomers = async () => {
+            try {
+                const customersResponse = await fetch('http://localhost:3000/deals');
+                const customersData = await customersResponse.json();
+
+                const addressesResponse = await fetch('http://localhost:3000/address');
+                const addressesData = await addressesResponse.json();
+
+                const combinedData = customersData.recordset.map((customer: Customer) => {
+                    const address = addressesData.recordset.find((addr: Address) => addr.AdresseID === customer.AdresseID);
+                    return {
+                        ...customer,
+                        ...address
+                    };
+                });
+
+                setCustomers(combinedData);
+            } catch (error) {
+                console.error('There was an error fetching the connection data!', error);
+            }
+        };
+
         fetchLeadsByStatus();
         fetchLeadData();
         fetchIncomeData();
         fetchOpenProjects();
+        fetchCustomers();
     }, []);
 
     if (leadData.length === 0) {
@@ -142,7 +192,8 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
     const numIncomeTicks = Math.ceil((upperIncomeBound - lowerIncomeBound) / 1000) + 1;
 
     //const COLORS = ['#2A4066', '#1D5B7E', '#0E7496', '#009EAF', '#00C49F'];
-    const COLORS = ['#009FFF', '#00C5FF', '#00DFFF', '#00FFDF', '#7DFFFC'];
+    //const COLORS = ['#009FFF', '#00C5FF', '#00DFFF', '#00FFDF', '#7DFFFC'];
+    const COLORS = ['#007ACC', '#0099CC', '#00B5CC', '#00CCB5', '#66CCCA'];
 
     const formatXAxis = (tickItem: string) => {
         const date = new Date(tickItem);
@@ -155,7 +206,7 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
     const CustomLeadTooltip = ({ active, payload, label }: { active?: boolean, payload?: any[], label?: Date }) => {
         if (active && payload && payload.length) {
             const date = new Date(label || '');
-            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
             const formattedLabel = `${monthNames[date.getMonth()]} ${date.getFullYear()}`;
 
             return (
@@ -173,13 +224,13 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
     const CustomIncomeTooltip = ({ active, payload, label }: { active?: boolean, payload?: any[], label?: Date }) => {
         if (active && payload && payload.length) {
             const date = new Date(label || '');
-            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
             const formattedLabel = `${monthNames[date.getMonth()]} ${date.getFullYear()}`;
 
             return (
                 <div className="custom-tooltip">
                     <p className="label">{formattedLabel}</p>
-                    <p className="income">{`Income: ${payload[0].payload.Income}`}</p>
+                    <p className="income">{`Einkommen: ${payload[0].payload.Income}`}</p>
                 </div>
             );
         }
@@ -190,9 +241,9 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
     return (
         <div className="dashboard">
             <section className="valueDeals">
-                <h3>Current Deals</h3>
+                <h3>Aktuelle Deals</h3>
                 <div className="gauge-chart">
-                    <ResponsiveContainer width="100%" height={150}>
+                    <ResponsiveContainer width="100%" height={140}>
                         <GaugeChart
                             id="value-deals-gauge"
                             nrOfLevels={3}
@@ -200,7 +251,7 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
                             colors={['#FF5F6D', '#FFC371', '#00C49F']}
                             percent={percentage / 100}
                             formatTextValue={() => `${actualLeads} Deals`}
-                            style={{ width: '100%', height: 150 }}
+                            style={{ width: '100%', height: 140 }}
                         />
                     </ResponsiveContainer>
                 </div>
@@ -210,42 +261,59 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
                 </div>
             </section>
             <section className="contacts">
-                <h3>Contacts</h3>
-            </section>
-            <section className="contacts">
-                <h3>Contacts</h3>
+                <h3>Kontakte</h3>
+                <div className="mini-table-container">
+                    <table className="mini-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Unternehmen</th>
+                                <th>Adresse</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {customers.map((customer, index) => (
+                                <tr key={index}>
+                                    <td>{customer.Kundenname}</td>
+                                    <td>{customer.Unternehmen}</td>
+                                    <td>{`${customer.Straße} ${customer.Hausnummer}, ${customer.Postleitzahl} ${customer.Stadt}`}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </section>
             <section className="incomeDevelopment">
-                <h3>Income Development</h3>
+                <h3>Einkommensentwicklung</h3>
                 <div className="line-chart-container">
-                    <ResponsiveContainer width="100%" height={165}>
+                    <ResponsiveContainer width="100%" height={160}>
                         <LineChart data={incomeData} margin={{ top: 5, right: 5, bottom: 5, left: -10 }}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="MonthYear" tickFormatter={formatXAxis} />
                             <YAxis domain={[lowerIncomeBound, upperIncomeBound]} />
                             <Tooltip content={<CustomIncomeTooltip />} />
-                            <Line type="monotone" dataKey="Income" stroke="#00C5FF" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5, fill: '#00C5FF' }} />
+                            <Line type="monotone" dataKey="Income" stroke="#0099CC" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5, fill: '#0099CC' }} />
                         </LineChart>
                     </ResponsiveContainer>
                 </div>
             </section>
             <section className="leadDevelopment">
-                <h3>Lead Development</h3>
+                <h3>Lead-Entwicklung</h3>
                 <div className="line-chart-container">
-                    <ResponsiveContainer width="100%" height={165}>
+                    <ResponsiveContainer width="100%" height={160}>
                         <LineChart data={leadData} margin={{ top: 5, right: 5, bottom: 5, left: -10 }}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="MonthYear" tickFormatter={formatXAxis} />
                             <YAxis domain={[lowerLeadBound, upperLeadBound]} ticks={[...Array(numLeadTicks).keys()].map(i => lowerLeadBound + i * 10)} />
                             <Tooltip content={<CustomLeadTooltip />} />
-                            <Line type="monotone" dataKey="TargetLeads" stroke="#00C5FF" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5, fill: '#00C5FF' }} />
-                            <Line type="monotone" dataKey="ActualLeads" stroke="#00FFDF" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5, fill: '#00FFDF' }} />
+                            <Line type="monotone" dataKey="TargetLeads" stroke="#0099CC" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5, fill: '#0099CC' }} />
+                            <Line type="monotone" dataKey="ActualLeads" stroke="#00CCB5" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5, fill: '#00CCB5' }} />
                         </LineChart>
                     </ResponsiveContainer>
                 </div>
             </section>
             <section className="leadsByStatus">
-                <h3>Leads By Status</h3>
+                <h3>Leads nach Status</h3>
                 <div className="pie-chart-container">
                     <ResponsiveContainer width="100%" height={165}>
                         <PieChart>
@@ -254,7 +322,7 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
                                 cx="45%"
                                 cy="50%"
                                 labelLine={false}
-                                outerRadius={75}
+                                outerRadius={70}
                                 fill="#8884d8"
                                 dataKey="count"
                                 nameKey="Status"
@@ -264,16 +332,16 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
                                 ))}
                             </Pie>
                             <Tooltip />
-                            <Legend layout="vertical" align="right" verticalAlign="middle" style={{ fontSize: "20px" }} />
+                            <Legend layout="vertical" align="right" verticalAlign="middle" style={{ fontSize: "16px" }} />
                         </PieChart>
                     </ResponsiveContainer>
                 </div>
             </section>
             <section className="documents">
-                <h3>Documents</h3>
+                <h3>Dokumente</h3>
             </section>
             <section className="openProjects">
-                <h3>Open Projects</h3>
+                <h3>Offene Projekte</h3>
                 <div className="cards-container">
                     {openProjects.map((project, index) => (
                         <ProjectCard

@@ -45,18 +45,20 @@ const Header: React.FC<HeaderProps> = ({ user, profileImages }) => {
     return (
         <header className={theme}>
             <h1>{getPageTitle(pathname)}</h1>
-            <form className="search-bar" onSubmit={handleSubmit}>
-                <span className="material-symbols-outlined">
-                    search
-                </span>
-                <input
-                    type="text"
-                    placeholder="Suche..."
-                    value={searchTerm}
-                    onChange={handleInputChange}
-                />
-            </form>
-            <ToggleThemeButton />
+            <div className="middle">
+                <form className="search-bar" onSubmit={handleSubmit}>
+                    <span className="material-symbols-outlined">
+                        search
+                    </span>
+                    <input
+                        type="text"
+                        placeholder="Suche..."
+                        value={searchTerm}
+                        onChange={handleInputChange}
+                    />
+                </form>
+                <ToggleThemeButton />
+            </div>
 
             <div className="profile">
                 <img src={user ? profileImages[user] : "default-profile-image-url"} alt="" /> {/* Provide a default profile image URL */}

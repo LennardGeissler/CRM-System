@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './SideBar.scss';
-
+    
 interface SideBarProps {
     handleLogout: () => void;
 }

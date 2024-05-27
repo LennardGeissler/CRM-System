@@ -1,7 +1,7 @@
 .dashboard {
     width: 100%;
-    height: calc(100% - 80px);
-    padding: 20px;
+    height: calc(100vh - 80px);
+    padding: 32px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(3, 1fr);
@@ -50,11 +50,13 @@
         font-weight: 400;
 
         .target-leads {
-            color: #0E7496;
+            color: #0099CC;
+            //font-weight: 500;
         }
 
         .actual-leads {
-            color: #00C49F;
+            color: #00CCB5;
+            //font-weight: 500;
         }
     }
 
@@ -118,9 +120,11 @@
             width: 100%;
             display: flex;
             justify-content: space-between;
+            align-items: center;
 
             .recharts-legend-wrapper {
-                font-size: 15px;
+                width: 55% !important;
+                font-size: 14px;
                 font-weight: 500;
                 line-height: 1.5;
                 background-color: var(--legend-wrapper);
@@ -141,8 +145,29 @@
             li {
                 width: 100%;
                 height: 48px;
-
             }
         }
     }
+
+    .mini-table-container {
+        max-height: calc((100vh - 332px) / 3); /* Set the maximum height of the container */
+        overflow-y: auto; /* Enable vertical scrollbar when content overflows */
+        scrollbar-width: none;
+        max-height: calc(4 * 36px + 1px);
+    }
+    
+    .mini-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .mini-table th,
+    .mini-table td {
+        padding: 8px;
+        border: 1px dashed #ddd;
+        text-align: left;
+        height: 36px;
+        background-color: var(--on-surface);
+    }
+    
 }

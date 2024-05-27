@@ -64,7 +64,6 @@ app.get("/deals", (req, res, next) => {
       res.send("nothing here");
     }
   });
-
 });
 
 app.post('/', async (req, res) => {
@@ -86,7 +85,7 @@ app.post('/', async (req, res) => {
         const user = result.recordset[0];
         const isMatch = await bcrypt.compare(password, user.HashedPasswort);
         if (isMatch) {
-          return res.json({ success: true, message: 'Login successful', MitarbeiterID: user.MitarbeiterID});
+          return res.json({ success: true, message: 'Login successful', MitarbeiterID: user.MitarbeiterID });
         } else {
           return res.status(401).json({ success: false, message: 'Invalid credentials' });
         }
@@ -247,6 +246,68 @@ app.post('/employeeName', async (req, res) => {
     }
   })
 });
+
+app.get('/address', (req, res) => {
+  const query = "SELECT * FROM dbo.Adressen";
+
+  const request = new sql.Request();
+  request.query(query, (err, rows) => {
+    if (err) {
+      console.log(err);
+    } else if (rows) {
+      res.json(rows);
+    } else {
+      res.send("nothing here");
+    }
+  });
+})
+
+app.post('/address', async (req, res) => {
+  const { addressID } = req.body;
+
+  const request = new sql.Request();
+
+  request.input('AdresseID', sql.Int, parseInt(addressID));
+
+  const query = `SELECT Name FROM dbo.Adressen WHERE AdresseID = @AdresseID`;
+
+  request.query(query, (err, result) => {
+    if (err) {
+      console.log("Error");
+      console.error('Error executing login query:', err);
+      return res.status(500).json({ success: false, message: 'Internal server error' });
+    } else {
+      console.log(result.recordset);
+      return res.status(201).json(result.recordset);
+    }
+  })
+});
+
+// Route zum Abrufen aller Kundendaten einschließlich Adresse basierend auf KundenID
+app.post('/customerDetails', async (req, res) => {
+  const { KundenID } = req.body;
+  console.log(KundenID);
+
+  const request = new sql.Request();
+  request.input('KundenID', sql.Int, parseInt(KundenID));
+
+  const query = `
+    SELECT * 
+    FROM dbo.Kunden AS K
+    JOIN dbo.Adressen AS A ON K.AdresseID = A.AdresseID
+    WHERE K.KundenID = @KundenID
+  `;
+
+  request.query(query, (err, result) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    } else {
+      res.status(200).json(result.recordset);
+    }
+  });
+});
+
 
 const port = 3000;
 app.listen(port, () => {
