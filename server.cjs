@@ -286,7 +286,6 @@ app.post('/address', async (req, res) => {
 // Route zum Abrufen aller Kundendaten einschließlich Adresse basierend auf KundenID
 app.post('/customerDetails', async (req, res) => {
   const { KundenID } = req.body;
-  console.log(KundenID);
 
   const request = new sql.Request();
   request.input('KundenID', sql.Int, parseInt(KundenID));
@@ -308,8 +307,8 @@ app.post('/customerDetails', async (req, res) => {
   });
 });
 
-
 const port = 3000;
-app.listen(port, () => {
+const host = '0.0.0.0';
+app.listen(port, host, () => {
   console.log(`Server listen on port ${port}`);
 })

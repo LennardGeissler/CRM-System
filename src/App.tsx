@@ -19,6 +19,7 @@ const App = () => {
   const [sessionToken, setSessionToken] = useState<string | null>(null);
   const [user, setUser] = useState<string | null>(null);
   const [userID, setUserID] = useState<number | null>(null);
+  const [sideBar, setSideBar] = useState<boolean>(false);
 
   useEffect(() => {
     const token = sessionStorage.getItem('sessionToken');
@@ -76,7 +77,7 @@ const App = () => {
   return (
     <ThemeProvider>
       <Router>
-        <MainContent userID={userID} user={user} sessionToken={sessionToken} handleLogin={handleLogin} handleLogout={handleLogout} profileImages={profileImages} />
+        <MainContent userID={userID} user={user} sessionToken={sessionToken} handleLogin={handleLogin} handleLogout={handleLogout} profileImages={profileImages} sideBar={sideBar} setSideBar={setSideBar}/>
       </Router>
     </ThemeProvider>
   );
@@ -89,17 +90,19 @@ interface MainContentProps {
   handleLogin: (name: string, userID:number) => void;
   handleLogout: () => void;
   profileImages: { [key: string]: string }
+  sideBar: boolean;
+  setSideBar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const MainContent: React.FC<MainContentProps> = ({ userID, user, sessionToken, handleLogin, handleLogout, profileImages }) => {
+const MainContent: React.FC<MainContentProps> = ({ userID, user, sessionToken, handleLogin, handleLogout, profileImages, sideBar, setSideBar }) => {
   const location = useLocation();
   const isLoginRoute = location.pathname === '/login';
 
   return (
     <div className="App">
-      {sessionToken && !isLoginRoute && <SideBar handleLogout={handleLogout} />}
+      {sessionToken && !isLoginRoute && <SideBar handleLogout={handleLogout} sideBar={sideBar} setSideBar={setSideBar} />}
       <div className="right">
-        {sessionToken && !isLoginRoute && <Header user={user} profileImages={profileImages} />}
+        {sessionToken && !isLoginRoute && <Header user={user} profileImages={profileImages} sideBar={sideBar} setSideBar={setSideBar} />}
         <Routes>
           <Route path="/" element={<Login handleLogin={handleLogin} />} />
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />

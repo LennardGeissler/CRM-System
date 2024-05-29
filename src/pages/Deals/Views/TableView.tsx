@@ -51,11 +51,11 @@ const TableView: React.FC<TableViewProps> = ({ cards, handleDrop, handleDragStar
                 <tbody>
                     {cards.map(card => (
                         <tr key={card.KundenID}>
-                            <td>{card.KundenID}</td>
-                            <td>{card.Kundenname}</td>
-                            <td>{card.Unternehmen}</td>
-                            <td>{card.Wert.toLocaleString()}</td>
-                            <td>{card.Status}</td>
+                            <td data-label="KundenID">{card.KundenID}</td>
+                            <td data-label="Kundenname">{card.Kundenname}</td>
+                            <td data-label="Unternehmen">{card.Unternehmen}</td>
+                            <td data-label="Wert">{card.Wert.toLocaleString()}</td>
+                            <td data-label="Status">{card.Status}</td>
                         </tr>
                     ))}
                 </tbody>

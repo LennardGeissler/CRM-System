@@ -20,7 +20,7 @@ const Projects = () => {
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const response = await fetch('http://localhost:3000/projects');
+                const response = await fetch('http://192.168.178.58:3000/projects');
                 const data = await response.json();
 
                 const projectsWithCustomerNames = await Promise.all(data.map(async (project: Project) => {
@@ -36,7 +36,7 @@ const Projects = () => {
 
         const fetchCustomerName = async (rechnungsempfängerKundeID: number) => {
             try {
-                const response = await fetch('http://localhost:3000/customerName', {
+                const response = await fetch('http://192.168.178.58:3000/customerName', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ const Projects = () => {
 
         const fetchEmployeeName = async (mitarbeiterID: number) => {
             try {
-                const response = await fetch('http://localhost:3000/employeeName', {
+                const response = await fetch('http://192.168.178.58:3000/employeeName', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

@@ -14,11 +14,12 @@ const ListView: React.FC<ListViewProps> = ({ cards, handleDrop, handleDragStart,
         status,
         cards: cards.filter((card) => card.Status === status),
     }));
-    
+
     return (
         <div className="list">
             {columns.map(column => (
                 <div key={column.status} onDrop={(e) => handleDrop(e, column.status)} onDragOver={(e) => e.preventDefault()} className="list-column">
+                    <div className="line"></div>
                     <h2>{column.status}</h2>
                     <div className="list-cards">
                         {column.cards.map(card => (
@@ -27,7 +28,6 @@ const ListView: React.FC<ListViewProps> = ({ cards, handleDrop, handleDragStart,
                             </div>
                         ))}
                     </div>
-                    <div className="line"></div>
                 </div>
             ))}
         </div>

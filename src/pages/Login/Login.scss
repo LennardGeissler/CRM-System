@@ -1,98 +1,200 @@
-.login {
-    width: 32%;
-    min-width: 500px;
-    max-width: 600px;
-    height: 700px;
-    border-radius: 32px;
-    margin: 5vh auto;
-    background-color: transparent;
-    backdrop-filter: blur(60%);
-    padding: 40px 60px;
-    border: 2px solid rgb(42, 64, 102);
-    box-shadow: 0px 0px 12px 6px rgba($color: rgb(42, 64, 102), $alpha: 0.1);
+@media screen and (min-width: 481px) {
+    .login {
+        width: 32%;
+        min-width: 500px;
+        max-width: 600px;
+        height: 700px;
+        border-radius: 32px;
+        margin: auto;
+        background-color: transparent;
+        backdrop-filter: blur(60%);
+        padding: 40px 60px;
+        border: 2px solid rgb(42, 64, 102);
+        box-shadow: 0px 0px 12px 6px rgba($color: rgb(42, 64, 102), $alpha: 0.1);
 
-    h1 {
-        text-align: center;
-        font-size: 40px;
-        margin-bottom: 12px;
-        color: var(--text-color);
-    }
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 12px;
+            color: var(--text-color);
+        }
 
-    p {
-        text-align: center;
-        margin-bottom: 80px;
-        color: var(--text-color);
-    }
+        p {
+            text-align: center;
+            margin-bottom: 80px;
+            color: var(--text-color);
+        }
 
-    form {
-        display: block;
+        form {
+            display: block;
 
-        .name,
-        .password {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-
-            div {
-                width: 64px;
-                height: 64px;
+            .name,
+            .password {
                 display: flex;
-                justify-content: center;
+                justify-content: space-between;
                 align-items: center;
-                background-color: var(--primary);
-                //border-radius: 50%;
-                box-shadow: 0px 0px 12px 2px rgba(255, 255, 255, 0.02);
+                margin-bottom: 40px;
 
-                img {
-                    width: 40%;
-                    height: 40%;
+                div {
+                    width: 64px;
+                    height: 64px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: var(--primary);
+                    //border-radius: 50%;
+                    box-shadow: 0px 0px 12px 2px rgba(255, 255, 255, 0.02);
+
+                    img {
+                        width: 40%;
+                        height: 40%;
+                    }
+                }
+
+                input {
+                    all: unset;
+                    box-sizing: border-box;
+                    width: 80%;
+                    height: 64px;
+                    background-color: transparent;
+                    //border-radius: 32px;
+                    border: 1px solid var(--text-color);
+                    box-shadow: 0px 0px 12px 2px rgba(255, 255, 255, 0.02);
+                    padding: 16px;
+                    color: var(--text-color);
+                    font-size: 16px;
+                    font-weight: 500;
                 }
             }
 
-            input {
-                all: unset;
-                box-sizing: border-box;
-                width: 80%;
+
+            button {
+                width: 100%;
                 height: 64px;
-                background-color: transparent;
+                background-color: var(--primary);
                 //border-radius: 32px;
-                border: 1px solid var(--text-color);
-                box-shadow: 0px 0px 12px 2px rgba(255, 255, 255, 0.02);
-                padding: 16px;
-                color: var(--text-color);
+                border: none;
                 font-size: 16px;
-                font-weight: 500;
+                color: #fff;
+                text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+                font-weight: 600;
+                letter-spacing: 1px;
+                cursor: pointer;
+
+                &:hover {
+                    filter: brightness(0.7);
+                    transition: all 0.5s ease;
+                }
             }
         }
 
-
-        button {
+        .line {
             width: 100%;
-            height: 64px;
-            background-color: var(--primary);
-            //border-radius: 32px;
-            border: none;
-            font-size: 16px;
-            color: #fff;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
-            font-weight: 600;
-            letter-spacing: 1px;
-            cursor: pointer;
-
-            &:hover {
-                filter: brightness(0.7);
-                transition: all 0.5s ease;
-            }
+            height: 1px;
+            background-color: var(--text-color);
+            border-radius: 1px;
+            margin-top: 40px;
+            margin: 40px auto;
         }
     }
+}
 
-    .line {
-        width: 100%;
-        height: 1px;
-        background-color: var(--text-color);
-        border-radius: 1px;
-        margin-top: 40px;
-        margin: 40px auto;
+@media screen and (max-width: 480px) {
+    .login {
+        padding: 32px 20px;
+        //max-width: 440px;
+        width: calc(100% - 32px);
+        height: 80vh;
+        border-radius: 32px;
+        margin: auto;
+        background-color: transparent;
+        backdrop-filter: blur(60%);
+        border: 1px solid rgba(#fff, 0.4);
+        box-shadow: 0px 0px 12px 6px rgba($color: var(--text-color), $alpha: 0.1);
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 12px;
+            color: var(--text-color);
+        }
+
+        p {
+            text-align: center;
+            margin-bottom: 48px;
+            color: var(--text-color);
+        }
+
+        form {
+            display: block;
+
+            .name,
+            .password {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 48px;
+                gap: 12px;
+
+                div {
+                    width: 64px;
+                    height: 64px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: var(--primary);
+                    box-shadow: 0px 0px 12px 2px rgba(255, 255, 255, 0.02);
+
+                    img {
+                        width: 60%;
+                        height: 60%;
+                    }
+                }
+
+                input {
+                    all: unset;
+                    box-sizing: border-box;
+                    width: calc(100% - 64px);
+                    height: 64px;
+                    background-color: transparent;
+                    //border-radius: 32px;
+                    border: 1px solid rgba(#fff, 0.4);
+                    box-shadow: 0px 0px 12px 2px rgba(255, 255, 255, 0.02);
+                    padding: 16px;
+                    color: var(--text-color);
+                    font-size: 16px;
+                    font-weight: 500;
+                }
+            }
+
+
+            button {
+                width: 100%;
+                height: 64px;
+                background-color: var(--primary);
+                //border-radius: 32px;
+                border: none;
+                font-size: 16px;
+                color: #fff;
+                text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+                font-weight: 600;
+                letter-spacing: 1px;
+                cursor: pointer;
+
+                &:hover {
+                    filter: brightness(0.7);
+                    transition: all 0.5s ease;
+                }
+            }
+        }
+
+        .line {
+            width: 100%;
+            height: 1px;
+            background-color: rgba($color: #fff, $alpha: 0.4);
+            border-radius: 1px;
+            margin-top: 40px;
+            margin: 40px auto;
+        }
     }
 }

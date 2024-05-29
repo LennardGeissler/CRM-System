@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Login.scss";
 
 interface LoginProps {
-    handleLogin: (name:string, userID:number) => void;
+    handleLogin: (name: string, userID: number) => void;
 }
 
 const Login: React.FC<LoginProps> = ({ handleLogin }) => {
@@ -18,7 +18,7 @@ const Login: React.FC<LoginProps> = ({ handleLogin }) => {
         e.preventDefault();
         setSubmitted(true);
         try {
-            const response = await fetch('http://localhost:3000', {
+            const response = await fetch('http://192.168.178.58:3000', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -56,39 +56,37 @@ const Login: React.FC<LoginProps> = ({ handleLogin }) => {
     }
 
     return (
-        <div>
-            <section className="login">
-                <h1>Welcome back!</h1>
-                <p>Log in to your account to continue</p>
-                <form action="">
-                    <div className="name">
-                        <div>
-                            <span className="material-symbols-outlined">
-                                mail
-                            </span>
-                        </div>
-                        <input type="text" name="name" id="name" placeholder="Max Mustermann" onChange={handleNameInput} value={nameInput} style={{ border: (submitted && !isName) ? '1px solid red' : (submitted && isName) ? '1px solid green' : '' }} />
+        <section className="login">
+            <h1>Willkommen zurück!</h1>
+            <p>Logge dich ein, um fortzufahren...</p>
+            <form action="">
+                <div className="name">
+                    <div>
+                        <span className="material-symbols-outlined">
+                            mail
+                        </span>
                     </div>
+                    <input type="text" name="name" id="name" placeholder="Max Mustermann" onChange={handleNameInput} value={nameInput} style={{ border: (submitted && !isName) ? '1px solid red' : (submitted && isName) ? '1px solid green' : '' }} />
+                </div>
 
-                    <div className="password">
-                        <div>
-                            <span className="material-symbols-outlined">
-                                lock
-                            </span>
-                        </div>
-                        <input type="password" name="password" id="password" placeholder="passwort123" onChange={handlePasswordInput} value={passwordInput} style={{ border: (submitted && !isPassword) ? '1px solid red' : (submitted && isPassword) ? '1px solid green' : '' }} />
+                <div className="password">
+                    <div>
+                        <span className="material-symbols-outlined">
+                            lock
+                        </span>
                     </div>
+                    <input type="password" name="password" id="password" placeholder="passwort123" onChange={handlePasswordInput} value={passwordInput} style={{ border: (submitted && !isPassword) ? '1px solid red' : (submitted && isPassword) ? '1px solid green' : '' }} />
+                </div>
 
-                    <button onClick={handleClick} type="button">Log In</button>
-                    {submitted && !isName ? <span style={{ display: "block", marginTop: 10 }}>Invalid name!</span> : ''}
-                    {submitted && !isPassword ? <span style={{ display: "block", marginTop: 10 }}>Invalid password!</span> : ''}
-                </form>
+                <button onClick={handleClick} type="button">Log In</button>
+                {submitted && !isName ? <span style={{ display: "block", marginTop: 10 }}>Ungültiger Name!</span> : ''}
+                {submitted && !isPassword ? <span style={{ display: "block", marginTop: 10 }}>Ünglültiges Passwort!</span> : ''}
+            </form>
 
-                <div className="line"></div>
+            <div className="line"></div>
 
 
-            </section>
-        </div>
+        </section>
     );
 }
 

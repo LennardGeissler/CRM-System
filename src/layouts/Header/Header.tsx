@@ -6,9 +6,11 @@ import ToggleThemeButton from "../../ToggleThemeButton";
 interface HeaderProps {
     user: string | null;
     profileImages: { [key: string]: string };
+    sideBar: boolean;
+    setSideBar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Header: React.FC<HeaderProps> = ({ user, profileImages }) => {
+const Header: React.FC<HeaderProps> = ({ user, profileImages, sideBar, setSideBar }) => {
     const { theme, toggleTheme } = useTheme();
     const [searchTerm, setSearchTerm] = useState('');
     const [pathname, setPathname] = useState(window.location.pathname);
@@ -42,32 +44,45 @@ const Header: React.FC<HeaderProps> = ({ user, profileImages }) => {
         return 'Dashboard';
     };
 
-    return (
-        <header className={theme}>
-            <h1>{getPageTitle(pathname)}</h1>
-            <div className="middle">
-                <form className="search-bar" onSubmit={handleSubmit}>
-                    <span className="material-symbols-outlined">
-                        search
-                    </span>
-                    <input
-                        type="text"
-                        placeholder="Suche..."
-                        value={searchTerm}
-                        onChange={handleInputChange}
-                    />
-                </form>
-                <ToggleThemeButton />
-            </div>
+    const handleClick = () => {
+        setSideBar(!sideBar);
+    }
 
-            <div className="profile">
-                <img src={user ? profileImages[user] : "default-profile-image-url"} alt="" /> {/* Provide a default profile image URL */}
-                <div className="info">
-                    <p className="name">{user}</p>
-                    <p className="position">CRM-Entwickler</p>
+    return (
+        <div className="header-outer">
+            <header className={theme}>
+                <div className="burger-menu" onClick={handleClick}>
+                    <input type="checkbox" />
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
-            </div>
-        </header>
+                <h1>{getPageTitle(pathname)}</h1>
+                <div className="middle">
+                    <form className="search-bar" onSubmit={handleSubmit}>
+                        <span className="material-symbols-outlined">
+                            search
+                        </span>
+                        <input
+                            type="text"
+                            placeholder="Suche..."
+                            value={searchTerm}
+                            onChange={handleInputChange}
+                        />
+                    </form>
+                    <ToggleThemeButton />
+                </div>
+
+                <div className="profile">
+                    <img src={user ? profileImages[user] : "default-profile-image-url"} alt="" /> {/* Provide a default profile image URL */}
+                    <div className="info">
+                        <p className="name">{user}</p>
+                        <p className="position">CRM-Entwickler</p>
+                    </div>
+                </div>
+            </header>
+        </div>
     )
 }
 

@@ -6,7 +6,7 @@ const AddDeals = ({ newCard, setNewCard, addCard, setIsModalOpen } : {newCard:an
         <div className="modal">
                     <div className="modal-content">
                         <span className="close" onClick={() => setIsModalOpen(false)}>&times;</span>
-                        <h2>Add a Deal</h2>
+                        <h2>Deal hinzufügen</h2>
                         <form onSubmit={addCard}>
                             <label>
                                 <p>Person:</p>
@@ -29,7 +29,7 @@ const AddDeals = ({ newCard, setNewCard, addCard, setIsModalOpen } : {newCard:an
                                 </select>
                             </label>
                             <div className="line"></div>
-                            <button type="submit">Add Card</button>
+                            <button type="submit">Card hinzufügen</button>
                         </form>
                     </div>
                 </div>

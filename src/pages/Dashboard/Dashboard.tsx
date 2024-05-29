@@ -50,12 +50,11 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
     const [actualLeads, setActualLeads] = useState<number>(0);
     const [openProjects, setOpenProjects] = useState<Project[]>([]);
     const [customers, setCustomers] = useState<Customer[]>([]);
-    console.log(userID);
 
     useEffect(() => {
         const fetchLeadsByStatus = async () => {
             try {
-                const response = await fetch('http://localhost:3000/leadsByStatus');
+                const response = await fetch('http://192.168.178.58:3000/leadsByStatus');
                 const data = await response.json();
                 setLeadsByStatus(data);
             } catch (error) {
@@ -66,7 +65,7 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
         const fetchLeadData = async () => {
             try {
                 // Fetch data from the server
-                const response = await fetch('http://localhost:3000/leadDevelopmentData');
+                const response = await fetch('http://192.168.178.58:3000/leadDevelopmentData');
                 const data = await response.json();
                 setLeadData(data);
 
@@ -82,7 +81,7 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
         const fetchIncomeData = async () => {
             try {
                 // Fetch data from the server
-                const response = await fetch('http://localhost:3000/incomeDevelopmentData');
+                const response = await fetch('http://192.168.178.58:3000/incomeDevelopmentData');
                 let data = await response.json();
                 setIncomeData(data)
             } catch (error) {
@@ -92,7 +91,7 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
 
         const fetchOpenProjects = async () => {
             try {
-                const response = await fetch('http://localhost:3000/projects');
+                const response = await fetch('http://192.168.178.58:3000/projects');
                 const data = await response.json();
 
                 const filteredProjects = data.filter((project: Project) => {
@@ -115,7 +114,7 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
 
         const fetchCustomerName = async (rechnungsempfängerKundeID: number) => {
             try {
-                const response = await fetch('http://localhost:3000/customerName', {
+                const response = await fetch('http://192.168.178.58:3000/customerName', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -134,10 +133,10 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
 
         const fetchCustomers = async () => {
             try {
-                const customersResponse = await fetch('http://localhost:3000/deals');
+                const customersResponse = await fetch('http://192.168.178.58:3000/deals');
                 const customersData = await customersResponse.json();
 
-                const addressesResponse = await fetch('http://localhost:3000/address');
+                const addressesResponse = await fetch('http://192.168.178.58:3000/address');
                 const addressesData = await addressesResponse.json();
 
                 const combinedData = customersData.recordset.map((customer: Customer) => {
@@ -260,6 +259,60 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
                     <span>{targetLeads} Deals</span>
                 </div>
             </section>
+            <section className="incomeDevelopment">
+                <h3>Einkommensentwicklung</h3>
+                <div className="line-chart-container">
+                    <ResponsiveContainer width="100%" height={170}>
+                        <LineChart data={incomeData} margin={{ top: 5, right: 5, bottom: 5, left: -10 }}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="MonthYear" tickFormatter={formatXAxis} />
+                            <YAxis domain={[lowerIncomeBound, upperIncomeBound]} />
+                            <Tooltip content={<CustomIncomeTooltip />} />
+                            <Line type="monotone" dataKey="Income" stroke="#0099CC" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5, fill: '#0099CC' }} />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </div>
+            </section>
+            <section className="leadDevelopment">
+                <h3>Lead-Entwicklung</h3>
+                <div className="line-chart-container">
+                    <ResponsiveContainer width="100%" height={170}>
+                        <LineChart data={leadData} margin={{ top: 5, right: 5, bottom: 5, left: -10 }}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="MonthYear" tickFormatter={formatXAxis} />
+                            <YAxis domain={[lowerLeadBound, upperLeadBound]} ticks={[...Array(numLeadTicks).keys()].map(i => lowerLeadBound + i * 10)} />
+                            <Tooltip content={<CustomLeadTooltip />} />
+                            <Line type="monotone" dataKey="TargetLeads" stroke="#0099CC" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5, fill: '#0099CC' }} />
+                            <Line type="monotone" dataKey="ActualLeads" stroke="#00CCB5" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5, fill: '#00CCB5' }} />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </div>
+            </section>
+            <section className="leadsByStatus">
+                <h3>Leads nach Status</h3>
+                <div className="pie-chart-container">
+                    <ResponsiveContainer width="100%" height={165}>
+                        <PieChart>
+                            <Pie
+                                data={leadsByStatus}
+                                cx="48%"
+                                cy="50%"
+                                labelLine={false}
+                                outerRadius={70}
+                                fill="#8884d8"
+                                dataKey="count"
+                                nameKey="Status"
+                            >
+                                {leadsByStatus.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                ))}
+                            </Pie>
+                            <Tooltip />
+                            <Legend layout="vertical" align="right" verticalAlign="middle" style={{ fontSize: "16px" }} />
+                        </PieChart>
+                    </ResponsiveContainer>
+                </div>
+            </section>
             <section className="contacts">
                 <h3>Kontakte</h3>
                 <div className="mini-table-container">
@@ -281,60 +334,6 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
                             ))}
                         </tbody>
                     </table>
-                </div>
-            </section>
-            <section className="incomeDevelopment">
-                <h3>Einkommensentwicklung</h3>
-                <div className="line-chart-container">
-                    <ResponsiveContainer width="100%" height={160}>
-                        <LineChart data={incomeData} margin={{ top: 5, right: 5, bottom: 5, left: -10 }}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="MonthYear" tickFormatter={formatXAxis} />
-                            <YAxis domain={[lowerIncomeBound, upperIncomeBound]} />
-                            <Tooltip content={<CustomIncomeTooltip />} />
-                            <Line type="monotone" dataKey="Income" stroke="#0099CC" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5, fill: '#0099CC' }} />
-                        </LineChart>
-                    </ResponsiveContainer>
-                </div>
-            </section>
-            <section className="leadDevelopment">
-                <h3>Lead-Entwicklung</h3>
-                <div className="line-chart-container">
-                    <ResponsiveContainer width="100%" height={160}>
-                        <LineChart data={leadData} margin={{ top: 5, right: 5, bottom: 5, left: -10 }}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="MonthYear" tickFormatter={formatXAxis} />
-                            <YAxis domain={[lowerLeadBound, upperLeadBound]} ticks={[...Array(numLeadTicks).keys()].map(i => lowerLeadBound + i * 10)} />
-                            <Tooltip content={<CustomLeadTooltip />} />
-                            <Line type="monotone" dataKey="TargetLeads" stroke="#0099CC" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5, fill: '#0099CC' }} />
-                            <Line type="monotone" dataKey="ActualLeads" stroke="#00CCB5" strokeWidth={2} activeDot={{ r: 8 }} dot={{ strokeWidth: 2, r: 2.5, fill: '#00CCB5' }} />
-                        </LineChart>
-                    </ResponsiveContainer>
-                </div>
-            </section>
-            <section className="leadsByStatus">
-                <h3>Leads nach Status</h3>
-                <div className="pie-chart-container">
-                    <ResponsiveContainer width="100%" height={165}>
-                        <PieChart>
-                            <Pie
-                                data={leadsByStatus}
-                                cx="45%"
-                                cy="50%"
-                                labelLine={false}
-                                outerRadius={70}
-                                fill="#8884d8"
-                                dataKey="count"
-                                nameKey="Status"
-                            >
-                                {leadsByStatus.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                ))}
-                            </Pie>
-                            <Tooltip />
-                            <Legend layout="vertical" align="right" verticalAlign="middle" style={{ fontSize: "16px" }} />
-                        </PieChart>
-                    </ResponsiveContainer>
                 </div>
             </section>
             <section className="documents">

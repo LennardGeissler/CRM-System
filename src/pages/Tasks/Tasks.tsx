@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import './Tasks.scss';
 
+export type Status = 'Ausstehend' | 'Nicht begonnen' | 'In Bearbeitung';
 interface Task {
     ID: number,
     Aufgabe: string,
     Person: 'Lennard Geißler' | 'Cedric Bergmann',
     Unteraufgaben: string,
     Deadline: string,
-    Status: 'Ausstehend' | 'Nicht begonnen' | 'In Bearbeitung',
+    Status: Status,
 }
+
+export const statuses: Status[] = ['Ausstehend', 'Nicht begonnen', 'In Bearbeitung'];
 
 const Tasks = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
@@ -22,7 +25,7 @@ const Tasks = () => {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await fetch('http://localhost:3000/tasks');
+                const response = await fetch('http://192.168.178.58:3000/tasks');
                 const data = await response.json();
                 setTasks(data);
                 setFilteredTasks(data);

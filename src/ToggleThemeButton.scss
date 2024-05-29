@@ -1,41 +1,87 @@
 /* ToggleThemeButton.scss */
-.toggle-theme-button {
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    position: relative;
-    width: 50px;
-    height: 24px;
-    border: 1px solid var(--text-color);
-    border-radius: 25px;
-    display: flex;
-    align-items: center;
-    padding: 2px;
-}
-
-.toggle-theme-button.light {
-    .toggle-icon {
-        background-color: var(--text-color);
+@media screen and (min-width: 481px) {
+    .toggle-theme-button {
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        position: relative;
+        width: 50px;
+        height: 24px;
         border: 1px solid var(--text-color);
+        border-radius: 25px;
+        display: flex;
+        align-items: center;
+        padding: 2px;
     }
-}
 
-.toggle-theme-button.dark {
+    .toggle-theme-button.light {
+        .toggle-icon {
+            background-color: var(--text-color);
+            border: 1px solid var(--text-color);
+        }
+    }
+
+    .toggle-theme-button.dark {
+        .toggle-icon {
+            background-color: var(--text-color);
+        }
+    }
+
     .toggle-icon {
-        background-color: var(--text-color);
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: #fff;
+        /* Default background color */
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+    }
+
+    .dark .toggle-icon {
+        transform: translateX(26px);
     }
 }
 
-.toggle-icon {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: #fff;
-    /* Default background color */
-    border-radius: 50%;
-    transition: transform 0.3s ease;
-}
+@media screen and (max-width: 480px) {
+    .toggle-theme-button {
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        position: relative;
+        width: 40px;
+        height: 20px;
+        border: 1px solid var(--text-color);
+        border-radius: 25px;
+        display: flex;
+        align-items: center;
+        padding: 2px;
+        display: none;
+    }
 
-.dark .toggle-icon {
-    transform: translateX(26px);
+    .toggle-theme-button.light {
+        .toggle-icon {
+            background-color: var(--text-color);
+            border: 1px solid var(--text-color);
+        }
+    }
+
+    .toggle-theme-button.dark {
+        .toggle-icon {
+            background-color: var(--text-color);
+        }
+    }
+
+    .toggle-icon {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background-color: #fff;
+        /* Default background color */
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+    }
+
+    .dark .toggle-icon {
+        transform: translateX(16px);
+    }
 }
