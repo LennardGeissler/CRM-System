@@ -5,7 +5,7 @@ import SideBar from './layouts/SideBar/SideBar.tsx';
 import Deals from "./pages/Deals/Deals.tsx";
 import Login from "./pages/Login/Login.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
-import Calendar from "./pages/Calendar/Calendar.tsx";
+import PersonalCalendar from "./pages/Calendar/PersonalCalendar.tsx";
 import Settings from "./pages/Settings/Settings.tsx";
 import GenerateSessionToken from "./utils/SessionToken.tsx";
 import './App.scss';
@@ -109,7 +109,7 @@ const MainContent: React.FC<MainContentProps> = ({ userID, user, sessionToken, h
           <Route path="/dashboard" element={sessionToken ? <Dashboard userID={userID} /> : <Login handleLogin={handleLogin} />} />
           <Route path="/deals" element={sessionToken ? <Deals /> : <Login handleLogin={handleLogin} />} />
           <Route path="/tasks" element={sessionToken ? <Tasks /> : <Login handleLogin={handleLogin} />} />
-          <Route path="/calendar" element={sessionToken ? <Calendar /> : <Login handleLogin={handleLogin} />} />
+          <Route path="/calendar" element={sessionToken ? <PersonalCalendar /> : <Login handleLogin={handleLogin} />} />
           <Route path="/settings" element={sessionToken ? <Settings /> : <Login handleLogin={handleLogin} />} />
           <Route path="/documents" element={sessionToken ? <Documents /> : <Login handleLogin={handleLogin} />} />
           <Route path="/projects" element={sessionToken ? <Projects /> : <Login handleLogin={handleLogin} />} />

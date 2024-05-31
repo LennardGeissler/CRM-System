@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import BoardView from "../Tasks/Views/BoardView";
 import './Tasks.scss';
 
 export type Status = 'Ausstehend' | 'Nicht begonnen' | 'In Bearbeitung';
@@ -89,6 +90,21 @@ const Tasks = () => {
             ...prevState,
             [taskId]: !prevState[taskId]
         }));
+    };
+
+    const handleDragStart = (e: React.DragEvent<HTMLDivElement>, taskId: number) => {
+        e.dataTransfer.setData('taskId', taskId.toString());
+    };
+
+    const handleDrop = async (e: React.DragEvent<HTMLDivElement>, status: Status) => {
+        const taskId = parseInt(e.dataTransfer.getData('taskId'));
+        const updatedTasks = tasks.map(task => {
+            if (task.ID === taskId) {
+                task.Status = status;
+            }
+            return task;
+        });
+        setTasks(updatedTasks);
     };
 
     return (
@@ -197,6 +213,12 @@ const Tasks = () => {
                         </div>
                     ))}
                 </div>
+            )}
+            {view === 'board' && (
+                <BoardView tasks={filteredTasks}
+                    handleDrop={handleDrop}
+                    handleDragStart={handleDragStart}
+                    handleCardClick={handleCardClick} />
             )}
         </div>
     );

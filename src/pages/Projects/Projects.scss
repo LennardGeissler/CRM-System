@@ -10,7 +10,7 @@
         align-items: baseline;
         justify-content: flex-start;
         border-radius: 8px;
-        width: 100%;
+        width: calc(25% - 16px);
         height: 180px;
         position: relative;
         perspective: 1000px;
@@ -92,8 +92,6 @@
                 gap: 8px;
                 padding: 4px;
             }
-
-            span {}
         }
 
         .status-red {

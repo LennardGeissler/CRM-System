@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
 import GaugeChart from 'react-gauge-chart';
 import './Dashboard.scss';
@@ -262,8 +262,8 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
             <section className="incomeDevelopment">
                 <h3>Einkommensentwicklung</h3>
                 <div className="line-chart-container">
-                    <ResponsiveContainer width="100%" height={170}>
-                        <LineChart data={incomeData} margin={{ top: 5, right: 5, bottom: 5, left: -10 }}>
+                    <ResponsiveContainer width="100%" height={175}>
+                        <LineChart data={incomeData} margin={{ top: 0, right: 4, bottom: 0, left: -10 }}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="MonthYear" tickFormatter={formatXAxis} />
                             <YAxis domain={[lowerIncomeBound, upperIncomeBound]} />
@@ -276,8 +276,8 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
             <section className="leadDevelopment">
                 <h3>Lead-Entwicklung</h3>
                 <div className="line-chart-container">
-                    <ResponsiveContainer width="100%" height={170}>
-                        <LineChart data={leadData} margin={{ top: 5, right: 5, bottom: 5, left: -10 }}>
+                    <ResponsiveContainer width="100%" height={175}>
+                        <LineChart data={leadData} margin={{ top: 0, right: 4, bottom: 0, left: -20 }}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="MonthYear" tickFormatter={formatXAxis} />
                             <YAxis domain={[lowerLeadBound, upperLeadBound]} ticks={[...Array(numLeadTicks).keys()].map(i => lowerLeadBound + i * 10)} />
@@ -291,7 +291,7 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
             <section className="leadsByStatus">
                 <h3>Leads nach Status</h3>
                 <div className="pie-chart-container">
-                    <ResponsiveContainer width="100%" height={165}>
+                    <ResponsiveContainer width="100%" height={170}>
                         <PieChart>
                             <Pie
                                 data={leadsByStatus}

@@ -21,6 +21,8 @@
     "mssql": "^10.0.2",
     "node-fetch": "^3.3.2",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-big-calendar": "^1.12.2",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
@@ -31,6 +33,8 @@
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
+    "@types/react-beautiful-dnd": "^13.1.8",
+    "@types/react-big-calendar": "^1.8.9",
     "@types/react-dom": "^18.2.22",
     "@types/react-gauge-chart": "^0.4.3",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
