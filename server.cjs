@@ -307,6 +307,88 @@ app.post('/customerDetails', async (req, res) => {
   });
 });
 
+app.get('/events', (req, res) => {
+  const query = 'SELECT * FROM dbo.Events';
+  const request = new sql.Request();
+  request.query(query, (err, result) => {
+    if (err) {
+      console.error('Error fetching events:', err);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    } else {
+      res.json(result.recordset);
+    }
+  });
+});
+
+// Add a new event
+app.post('/events', (req, res) => {
+  const { Title, Start, End } = req.body;
+  console.log(Title, Start, End);
+  const startDate = new Date(Start);
+  const endDate = new Date(End);
+
+  const request = new sql.Request();
+
+  request.input('Title', sql.VarChar, Title);
+  request.input('Start', sql.DateTime, startDate);
+  request.input('End', sql.DateTime, endDate);
+
+  const query = `
+    INSERT INTO dbo.Events ([Title], [Start], [End])
+    VALUES (@Title, @Start, @End)
+  `;
+
+  // Execute the query
+  request.query(query, (err, result) => {
+    if (err) {
+      console.error('Error adding event:', err);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    } else {
+      res.status(201).json({ success: true, message: 'Event added successfully' });
+    }
+  });
+});
+
+app.delete('/events/:eventId', (req, res) => {
+  const eventId = req.params.eventId;
+
+  // Query to delete the event from the database
+  const query = `DELETE FROM Events WHERE EventID = ${eventId}`;
+
+  // Execute the query
+  sql.query(query, (err, result) => {
+    if (err) {
+      console.error('Error deleting event:', err);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    } else {
+      res.status(200).json({ success: true, message: 'Event deleted successfully' });
+    }
+  });
+});
+
+app.post('/employeeData', async (req, res) => {
+  const { MitarbeiterID } = req.body;
+console.log(MitarbeiterID, ".");
+  const request = new sql.Request();
+  request.input('MitarbeiterID', sql.Int, parseInt(MitarbeiterID));
+
+  const query = `
+    SELECT * 
+    FROM dbo.Mitarbeiter 
+    WHERE MitarbeiterID = @MitarbeiterID
+  `;
+
+  request.query(query, (err, result) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    } else {
+      res.status(200).json(result.recordset);
+    }
+  });
+});
+
+
 const port = 3000;
 const host = '0.0.0.0';
 app.listen(port, host, () => {

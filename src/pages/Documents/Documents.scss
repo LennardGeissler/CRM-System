@@ -54,9 +54,9 @@
                     transition: transform 0.25s ease;
                 }
 
-                img {
-                    width: 16px;
-                    height: 16px;
+                span {
+                    color: var(--text-color);
+                    font-weight: 600;
                 }
 
                 h4 {
@@ -173,18 +173,20 @@
                     border-radius: 0;
                     background-color: transparent;
                     cursor: pointer;
+                    color: var(--text-color);
                 }
 
                 .toggle {
                     height: auto;
-                    padding: 4px;
                     display: flex;
                     justify-content: flex-end;
-                    align-items: center;
 
-                    img {
-                        width: 20px;
-                        height: 20px;
+                    span {
+                        color: var(--text-color);
+                        width: 24px;
+                        height: 24px;
+                        margin: 2px;
+                        font-weight: 600;
                     }
                 }
             }

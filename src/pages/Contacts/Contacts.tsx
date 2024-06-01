@@ -62,33 +62,38 @@ const Contacts = () => {
     return (
         <div className="contacts-container">
             {view == 'table' && (
-                <table>
-                    <thead>
-                        <tr>
-                            <th>KundenID</th>
-                            <th>Kundenname
-                                {/* <label>
+                <>
+                    <div className="title">
+                        <h2>Kontaktliste</h2>
+                        <div className="line"></div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>KundenID</th>
+                                <th>Kundenname
+                                    {/* <label>
                                 <select value={personFilter} onChange={(e) => setPersonFilter(e.target.value)}>
                                     <option value="">Alle</option>
                                     <option value="Lennard Geißler">Lennard Geißler</option>
                                     <option value="Cedric Bergmann">Cedric Bergmann</option>
                                 </select>
                             </label> */}
-                            </th>
-                            <th>Unternehmen</th>
-                            <th>Straße</th>
-                            <th>Hausnummer</th>
-                            <th>Stadt</th>
-                            <th>Region</th>
-                            <th>Postleitzahl</th>
-                            <th>Land</th>
-                            <th>Wert
-                                {/* <button onClick={() => handleSort('Deadline')}>
+                                </th>
+                                <th>Unternehmen</th>
+                                <th>Straße</th>
+                                <th>Hausnummer</th>
+                                <th>Stadt</th>
+                                <th>Region</th>
+                                <th>Postleitzahl</th>
+                                <th>Land</th>
+                                <th>Wert
+                                    {/* <button onClick={() => handleSort('Deadline')}>
                                 {sortOrder === 'asc' ? '↑' : '↓'}
                             </button> */}
-                            </th>
-                            <th>Status
-                                {/* <label>
+                                </th>
+                                <th>Status
+                                    {/* <label>
                                 <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
                                     <option value="">Alle</option>
                                     <option value="Ausstehend">Ausstehend</option>
@@ -96,30 +101,31 @@ const Contacts = () => {
                                     <option value="In Bearbeitung">In Bearbeitung</option>
                                 </select>
                             </label> */}
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {customers.map(customer => (
-                            <tr key={customer.KundenID}>
-                                <td>{customer.KundenID}</td>
-                                <td className="customer-name" onClick={() => {
-                                    setView('customer');
-                                    setCustomerID(customer.KundenID);
-                                }}>{customer.Kundenname}</td>
-                                <td>{customer.Unternehmen}</td>
-                                <td>{customer.Straße}</td>
-                                <td>{customer.Hausnummer}</td>
-                                <td>{customer.Stadt}</td>
-                                <td>{customer.Region}</td>
-                                <td>{customer.Postleitzahl}</td>
-                                <td>{customer.Land}</td>
-                                <td>{customer.Wert.toLocaleString()}</td>
-                                <td>{customer.Status}</td>
+                                </th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {customers.map(customer => (
+                                <tr key={customer.KundenID}>
+                                    <td>{customer.KundenID}</td>
+                                    <td className="customer-name" onClick={() => {
+                                        setView('customer');
+                                        setCustomerID(customer.KundenID);
+                                    }}>{customer.Kundenname}</td>
+                                    <td>{customer.Unternehmen}</td>
+                                    <td>{customer.Straße}</td>
+                                    <td>{customer.Hausnummer}</td>
+                                    <td>{customer.Stadt}</td>
+                                    <td>{customer.Region}</td>
+                                    <td>{customer.Postleitzahl}</td>
+                                    <td>{customer.Land}</td>
+                                    <td>{customer.Wert.toLocaleString()}</td>
+                                    <td>{customer.Status}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </>
             )}
             {view == 'customer' && (
                 <CustomerDetails customerID={customerID}></CustomerDetails>

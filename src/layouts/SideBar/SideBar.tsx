@@ -95,13 +95,6 @@ const SideBar: React.FC<SideBarProps> = ({ handleLogout, sideBar, setSideBar }) 
 
                                     <div className="bottom">
                                         <li>
-                                            <a href="/settings" className={pathname === '/settings' ? 'active' : ''}>
-                                                <span className="material-symbols-outlined">
-                                                    settings
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
                                             <a href="/login" onClick={handleLogout}>
                                                 <span className="material-symbols-outlined">
                                                     logout

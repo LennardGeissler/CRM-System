@@ -36,11 +36,7 @@ const Options: React.FC<OptionsProps> = ({ view, changeView, setIsModalOpen, car
                     </button>
                 </div>
                 <div className="right-side">
-                    <div className="numbers">
-                        <span>{cards.reduce((accumulator, currentCard) => accumulator + currentCard.Wert, 0).toLocaleString()} €</span>
-                        <span>~</span>
-                        <span>{cards.length} Deals</span>
-                    </div>
+                    <div className="line"></div>
                 </div>
             </div>
     );

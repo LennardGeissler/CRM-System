@@ -70,11 +70,13 @@ const Documents = () => {
             </div>
             <div className="file-container">
                 <div className="file-inner">
-                    <div className="dropdown-menu" style={toggleOptions ? {width: "25%"} : {width: "30px", height: "30px"}}>
+                    <div className="dropdown-menu" style={toggleOptions ? { width: "25%" } : { width: "30px", height: "30px" }}>
                         <button className="toggle" onClick={handletoggleOptions}>
-                            <img src="src\assets\images\arrow-down.png" alt="" />
+                            <span className="material-symbols-outlined">
+                                keyboard_arrow_down
+                            </span>
                         </button>
-                        <div className="file-options" style={toggleOptions ? {display: "block"} : {display: "none"}}>
+                        <div className="file-options" style={toggleOptions ? { display: "block" } : { display: "none" }}>
                             <button className="uploadFile">
                                 <p>Upload File</p>
                             </button>
@@ -99,7 +101,11 @@ const Documents = () => {
                 <div className="line"></div>
                 <div className="options-inner">
                     <div className="option">
-                        <button onClick={handleClick1} style={{ transform: `rotate(${rotation1}deg)` }}><img src="src\assets\images\arrow-down.png" alt="" /></button>
+                        <button onClick={handleClick1} style={{ transform: `rotate(${rotation1}deg)` }}>
+                            <span className="material-symbols-outlined">
+                                keyboard_arrow_down
+                            </span>
+                        </button>
                         <h4>Allgemein</h4>
                     </div>
                     <div className="file-information" style={closed1 ? { display: "none" } : { display: "block" }}>
@@ -156,7 +162,11 @@ const Documents = () => {
                     </div>
 
                     <div className="option">
-                        <button onClick={handleClick2} style={{ transform: `rotate(${rotation2}deg)` }}><img src="src\assets\images\arrow-down.png" alt="" /></button>
+                        <button onClick={handleClick2} style={{ transform: `rotate(${rotation2}deg)` }}>
+                            <span className="material-symbols-outlined">
+                                keyboard_arrow_down
+                            </span>
+                        </button>
                         <h4>Person</h4>
                     </div>
                     <div className="person" style={closed2 ? { display: "none" } : { display: "block" }}>

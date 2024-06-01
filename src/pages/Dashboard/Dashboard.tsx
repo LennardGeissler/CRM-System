@@ -110,7 +110,6 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
                 console.error('Error fetching open projects: ', error);
             }
         };
-        console.log(openProjects);
 
         const fetchCustomerName = async (rechnungsempfängerKundeID: number) => {
             try {
