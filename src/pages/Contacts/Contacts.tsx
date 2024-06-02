@@ -36,10 +36,10 @@ const Contacts = () => {
     useEffect(() => {
         const fetchConnectionData = async () => {
             try {
-                const customersResponse = await fetch('http://localhost:3000/deals');
+                const customersResponse = await fetch('http://192.168.178.58:3000/deals');
                 const customersData = await customersResponse.json();
 
-                const addressesResponse = await fetch('http://localhost:3000/address');
+                const addressesResponse = await fetch('http://192.168.178.58:3000/address');
                 const addressesData = await addressesResponse.json();
 
                 const combinedData = customersData.recordset.map((customer: Customer) => {
@@ -107,20 +107,21 @@ const Contacts = () => {
                         <tbody>
                             {customers.map(customer => (
                                 <tr key={customer.KundenID}>
-                                    <td>{customer.KundenID}</td>
-                                    <td className="customer-name" onClick={() => {
+                                    <td data-label="KundenID">{customer.KundenID}</td>
+                                    <td data-label="Kundenname"
+                                        className="customer-name" onClick={() => {
                                         setView('customer');
                                         setCustomerID(customer.KundenID);
                                     }}>{customer.Kundenname}</td>
-                                    <td>{customer.Unternehmen}</td>
-                                    <td>{customer.Straße}</td>
-                                    <td>{customer.Hausnummer}</td>
-                                    <td>{customer.Stadt}</td>
-                                    <td>{customer.Region}</td>
-                                    <td>{customer.Postleitzahl}</td>
-                                    <td>{customer.Land}</td>
-                                    <td>{customer.Wert.toLocaleString()}</td>
-                                    <td>{customer.Status}</td>
+                                    <td data-label="Kundenname">{customer.Unternehmen}</td>
+                                    <td data-label="Straße">{customer.Straße}</td>
+                                    <td data-label="Hausnummer">{customer.Hausnummer}</td>
+                                    <td data-label="Stadt">{customer.Stadt}</td>
+                                    <td data-label="Region">{customer.Region}</td>
+                                    <td data-label="Postleitzahl">{customer.Postleitzahl}</td>
+                                    <td data-label="Land">{customer.Land}</td>
+                                    <td data-label="Wert">{customer.Wert.toLocaleString()}</td>
+                                    <td data-label="Status">{customer.Status}</td>
                                 </tr>
                             ))}
                         </tbody>

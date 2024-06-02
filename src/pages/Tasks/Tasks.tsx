@@ -1,18 +1,28 @@
 import React, { useState, useEffect } from "react";
 import BoardView from "../Tasks/Views/BoardView";
 import './Tasks.scss';
+import AddTasks from "./AddTasks";
 
 export type Status = 'Ausstehend' | 'Nicht begonnen' | 'In Bearbeitung';
+
 interface Task {
     ID: number,
     Aufgabe: string,
     Person: 'Lennard Geißler' | 'Cedric Bergmann',
-    Unteraufgaben: string,
+    Unteraufgaben: '',
     Deadline: string,
     Status: Status,
 }
 
 export const statuses: Status[] = ['Ausstehend', 'Nicht begonnen', 'In Bearbeitung'];
+
+const initialNewCardState: Omit<Task, 'ID'> = {
+    Aufgabe: '',
+    Person: 'Lennard Geißler',
+    Unteraufgaben: '',
+    Deadline: new Date().toISOString(),
+    Status: statuses[0]
+};
 
 const Tasks = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
@@ -22,6 +32,8 @@ const Tasks = () => {
     const [sortOrder, setSortOrder] = useState<string>('asc');
     const [view, setView] = useState<string>('gallery');
     const [flippedCards, setFlippedCards] = useState<{ [key: number]: boolean }>({});
+    const [newCard, setNewCard] = useState(initialNewCardState);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchTasks = async () => {
@@ -107,6 +119,41 @@ const Tasks = () => {
         setTasks(updatedTasks);
     };
 
+    const addTask = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const subtasksArray = newCard.Unteraufgaben
+                .split(',')
+                .map((name: string) => ({ name }));
+
+            console.log(subtasksArray)
+            const response = await fetch('http://192.168.178.58:3000/tasks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ...newCard,
+                    Unteraufgaben: JSON.stringify(subtasksArray)
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to add card');
+            }
+    
+            const data = await response.json();
+            const newCardWithId = { ...newCard, ID: data.ID };
+    
+            setTasks([...tasks, newCardWithId]);
+            setIsModalOpen(false);
+            setNewCard(initialNewCardState);
+
+        } catch (error) {
+            console.error('Error adding card:', error);
+        }
+    };
+
     return (
         <div className="tasks-container">
             <div className="options">
@@ -128,7 +175,7 @@ const Tasks = () => {
                     </button>
                 </div>
 
-                <button className="add-card">
+                <button className="add-card" onClick={() => setIsModalOpen(true)}>
                     + Task
                 </button>
             </div>
@@ -220,6 +267,7 @@ const Tasks = () => {
                     handleDragStart={handleDragStart}
                     handleCardClick={handleCardClick} />
             )}
+            {isModalOpen && <AddTasks newCard={newCard} setNewCard={setNewCard} addCard={addTask} setIsModalOpen={setIsModalOpen} />}
         </div>
     );
 }

@@ -45,7 +45,7 @@ const PersonalCalendar: React.FC = () => {
 
     const fetchEvents = async () => {
         try {
-            const response = await fetch('http://localhost:3000/events');
+            const response = await fetch('http://192.168.178.58:3000/events');
             if (response.ok) {
                 const data = await response.json();
                 // Adjust the data format if necessary
@@ -67,7 +67,7 @@ const PersonalCalendar: React.FC = () => {
     const handleAddEvent = async (title: string, start: Date, end: Date) => {
         try {
             const newEvent: Event = { Title: title, Start: start, End: end };
-            const response = await fetch('http://localhost:3000/events', {
+            const response = await fetch('http://192.168.178.58:3000/events', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ const PersonalCalendar: React.FC = () => {
     const handleDeleteEvent = async () => {
         if (selectedEvent) {
             try {
-                const response = await fetch(`http://localhost:3000/events/${selectedEvent.EventID}`, {
+                const response = await fetch(`http://192.168.178.58:3000/events/${selectedEvent.EventID}`, {
                     method: 'DELETE',
                 });
                 if (response.ok) {
@@ -107,6 +107,12 @@ const PersonalCalendar: React.FC = () => {
         setContextMenuPosition({ left: event.clientX, top: event.clientY });
     };
 
+    const CustomDateHeader = ({ label }: { label: string }) => {
+        // Extract the date part from the label
+        const date = label.split(' ')[0];
+        return <div>{date}</div>;
+    };
+
     return (
         <div className="calendar-outer" onContextMenu={handleContextMenu}>
             <Calendar
@@ -122,6 +128,9 @@ const PersonalCalendar: React.FC = () => {
                 culture="de" // Ensure the locale is set correctly
                 components={{
                     toolbar: (props) => <CustomToolbar {...props} onAddEvent={() => setModalShow(true)} />,
+                    week: {
+                        header: CustomDateHeader,
+                    },
                 }}
                 onSelectEvent={event => setSelectedEvent(event)} // Handle event selection
             />

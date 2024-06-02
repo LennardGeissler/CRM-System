@@ -388,6 +388,34 @@ console.log(MitarbeiterID, ".");
   });
 });
 
+app.post('/tasks', (req, res) => {
+  const { Aufgabe, Person, Unteraufgaben, Deadline, Status } = req.body;
+  console.log(Aufgabe, Person, Unteraufgaben, Deadline, Status);
+  const deadlineDate = new Date(Deadline);
+
+  const request = new sql.Request();
+
+  request.input('Aufgabe', sql.VarChar, Aufgabe);
+  request.input('Person', sql.VarChar, Person);
+  request.input('Unteraufgaben', sql.VarChar, Unteraufgaben);
+  request.input('Deadline', sql.DateTime, deadlineDate);
+  request.input('Status', sql.VarChar, Status);
+
+  const query = `
+    INSERT INTO dbo.Aufgaben ([Aufgabe], [Person], [Unteraufgaben], [Deadline], [Status])
+    VALUES (@Aufgabe, @Person, @Unteraufgaben, @Deadline, @Status)
+  `;
+
+  request.query(query, (err, result) => {
+    if (err) {
+      console.error('Error adding task:', err);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    } else {
+      res.status(201).json({ success: true, message: 'Task added successfully' });
+    }
+  });
+});
+
 
 const port = 3000;
 const host = '0.0.0.0';

@@ -97,7 +97,7 @@ const CustomerDetails = ({ customerID }: { customerID: number | null }) => {
         const fetchCustomerDetails = async () => {
             try {
                 const [customerResponse, projectsResponse] = await Promise.all([
-                    fetch('http://localhost:3000/customerDetails', {
+                    fetch('http://192.168.178.58:3000/customerDetails', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -331,7 +331,7 @@ const CustomerDetails = ({ customerID }: { customerID: number | null }) => {
                             </li>
                             <li>
                                 <div className="column1">
-                                    <p>Telefonnummer</p>
+                                    <p>Telefon</p>
                                 </div>
                                 <div className="column2">
                                     <span className="phone-number">+49 123 4567890</span>
@@ -400,7 +400,7 @@ const CustomerDetails = ({ customerID }: { customerID: number | null }) => {
                             </li>
                             <li>
                                 <div className="column1">
-                                    <p>Telefonnummer</p>
+                                    <p>Telefon</p>
                                 </div>
                                 <div className="column2">
                                     <span className="">{employeeData && employeeData[0].Telefonnummer}</span>
