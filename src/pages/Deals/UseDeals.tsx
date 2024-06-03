@@ -7,7 +7,7 @@ const UseDeals = () => {
     useEffect(() => {
         const fetchConnectionData = async () => {
             try {
-                const response = await fetch('http://192.168.178.58:3000/deals');
+                const response = await fetch('http://localhost:3000/deals');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -23,7 +23,7 @@ const UseDeals = () => {
 
     const updateCard = async (card: Customer) => {
         try {
-            const response = await fetch(`http://192.168.178.58:3000/deals/${card.KundenID}`, {
+            const response = await fetch(`http://localhost:3000/deals/${card.KundenID}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

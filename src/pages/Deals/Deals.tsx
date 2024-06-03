@@ -41,7 +41,7 @@ const Deals = () => {
     const addCard = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://192.168.178.58:3000/deals', {
+            const response = await fetch('http://localhost:3000/deals', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

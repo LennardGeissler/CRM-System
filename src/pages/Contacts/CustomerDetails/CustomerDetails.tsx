@@ -76,7 +76,7 @@ const CustomerDetails = ({ customerID }: { customerID: number | null }) => {
 
     const fetchEmployeeData = async (mitarbeiterID: number) => {
         try {
-            const response = await fetch('http://192.168.178.58:3000/employeeData', {
+            const response = await fetch('http://localhost:3000/employeeData', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -97,14 +97,14 @@ const CustomerDetails = ({ customerID }: { customerID: number | null }) => {
         const fetchCustomerDetails = async () => {
             try {
                 const [customerResponse, projectsResponse] = await Promise.all([
-                    fetch('http://192.168.178.58:3000/customerDetails', {
+                    fetch('http://localhost:3000/customerDetails', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({ KundenID: customerID }),
                     }),
-                    fetch('http://192.168.178.58:3000/projects'),
+                    fetch('http://localhost:3000/projects'),
                 ]);
 
                 if (!customerResponse.ok) {
@@ -139,7 +139,7 @@ const CustomerDetails = ({ customerID }: { customerID: number | null }) => {
 
         const fetchOpenProjects = async () => {
             try {
-                const response = await fetch('http://192.168.178.58:3000/projects');
+                const response = await fetch('http://localhost:3000/projects');
                 const data = await response.json();
 
                 const filteredProjects = data.filter((project: Project) => {
@@ -159,7 +159,7 @@ const CustomerDetails = ({ customerID }: { customerID: number | null }) => {
 
         const fetchCustomerName = async (rechnungsempfängerKundeID: number) => {
             try {
-                const response = await fetch('http://192.168.178.58:3000/customerName', {
+                const response = await fetch('http://localhost:3000/customerName', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -178,7 +178,7 @@ const CustomerDetails = ({ customerID }: { customerID: number | null }) => {
 
         const fetchEmployeeName = async (verantwortlicherMitarbeiterID: number) => {
             try {
-                const response = await fetch('http://192.168.178.58:3000/employeeName', {
+                const response = await fetch('http://localhost:3000/employeeName', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

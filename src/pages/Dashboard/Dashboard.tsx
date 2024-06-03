@@ -54,7 +54,7 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
     useEffect(() => {
         const fetchLeadsByStatus = async () => {
             try {
-                const response = await fetch('http://192.168.178.58:3000/leadsByStatus');
+                const response = await fetch('http://localhost:3000/leadsByStatus');
                 const data = await response.json();
                 setLeadsByStatus(data);
             } catch (error) {
@@ -65,7 +65,7 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
         const fetchLeadData = async () => {
             try {
                 // Fetch data from the server
-                const response = await fetch('http://192.168.178.58:3000/leadDevelopmentData');
+                const response = await fetch('http://localhost:3000/leadDevelopmentData');
                 const data = await response.json();
                 setLeadData(data);
 
@@ -81,7 +81,7 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
         const fetchIncomeData = async () => {
             try {
                 // Fetch data from the server
-                const response = await fetch('http://192.168.178.58:3000/incomeDevelopmentData');
+                const response = await fetch('http://localhost:3000/incomeDevelopmentData');
                 let data = await response.json();
                 setIncomeData(data)
             } catch (error) {
@@ -91,7 +91,7 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
 
         const fetchOpenProjects = async () => {
             try {
-                const response = await fetch('http://192.168.178.58:3000/projects');
+                const response = await fetch('http://localhost:3000/projects');
                 const data = await response.json();
 
                 const filteredProjects = data.filter((project: Project) => {
@@ -113,7 +113,7 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
 
         const fetchCustomerName = async (rechnungsempfängerKundeID: number) => {
             try {
-                const response = await fetch('http://192.168.178.58:3000/customerName', {
+                const response = await fetch('http://localhost:3000/customerName', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -132,10 +132,10 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
 
         const fetchCustomers = async () => {
             try {
-                const customersResponse = await fetch('http://192.168.178.58:3000/deals');
+                const customersResponse = await fetch('http://localhost:3000/deals');
                 const customersData = await customersResponse.json();
 
-                const addressesResponse = await fetch('http://192.168.178.58:3000/address');
+                const addressesResponse = await fetch('http://localhost:3000/address');
                 const addressesData = await addressesResponse.json();
 
                 const combinedData = customersData.recordset.map((customer: Customer) => {

@@ -10,17 +10,17 @@ interface Project {
     RechnungsempfängerKundeID: number,
     Aktiv: number,
     Kundenname?: string,
-    Mitarbeitername?:string,
+    Mitarbeitername?: string,
 }
 
 const Projects = () => {
     const [projects, setProjects] = useState<Project[]>([]);
     const [flippedCards, setFlippedCards] = useState<{ [key: number]: boolean }>({});
-    
+
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const response = await fetch('http://192.168.178.58:3000/projects');
+                const response = await fetch('http://localhost:3000/projects');
                 const data = await response.json();
 
                 const projectsWithCustomerNames = await Promise.all(data.map(async (project: Project) => {
@@ -36,7 +36,7 @@ const Projects = () => {
 
         const fetchCustomerName = async (rechnungsempfängerKundeID: number) => {
             try {
-                const response = await fetch('http://192.168.178.58:3000/customerName', {
+                const response = await fetch('http://localhost:3000/customerName', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ const Projects = () => {
 
         const fetchEmployeeName = async (mitarbeiterID: number) => {
             try {
-                const response = await fetch('http://192.168.178.58:3000/employeeName', {
+                const response = await fetch('http://localhost:3000/employeeName', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ const Projects = () => {
 
         fetchProjects();
     }, []);
-    
+
     console.log(projects);
     const handleCardClick = (ProjektID: number) => {
         setFlippedCards(prevState => ({
@@ -93,6 +93,22 @@ const Projects = () => {
                 return 'status-green';
             default:
                 return '';
+        }
+    };
+
+    const deleteProject = async (projectId: number) => {
+        try {
+            const response = await fetch(`http://localhost:3000/projects/${projectId}`, {
+                method: 'DELETE'
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to delete task');
+            }
+
+            setProjects(projects.filter(project => project.ProjektID !== projectId));
+        } catch (error) {
+            console.error('Error deleting task:', error);
         }
     };
 
@@ -118,6 +134,14 @@ const Projects = () => {
                                 {project.Status == 'Abgeschlossen' && (
                                     <span>Abgeschlossen</span>
                                 )}
+                            </button>
+                            <button className="cmd-delete" onClick={(e) => {
+                                e.stopPropagation(); // Prevent the card click event
+                                deleteProject(project.ProjektID);
+                            }}>
+                                <span className="material-symbols-outlined delete-icon">
+                                    delete
+                                </span>
                             </button>
                         </div>
                         <div className="card-back">

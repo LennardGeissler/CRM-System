@@ -38,7 +38,7 @@ const Tasks = () => {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await fetch('http://192.168.178.58:3000/tasks');
+                const response = await fetch('http://localhost:3000/tasks');
                 const data = await response.json();
                 setTasks(data);
                 setFilteredTasks(data);
@@ -127,7 +127,7 @@ const Tasks = () => {
                 .map((name: string) => ({ name }));
 
             console.log(subtasksArray)
-            const response = await fetch('http://192.168.178.58:3000/tasks', {
+            const response = await fetch('http://localhost:3000/tasks', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -156,7 +156,7 @@ const Tasks = () => {
 
     const deleteTask = async (taskId: number) => {
         try {
-            const response = await fetch(`http://192.168.178.58:3000/tasks/${taskId}`, {
+            const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
                 method: 'DELETE'
             });
 

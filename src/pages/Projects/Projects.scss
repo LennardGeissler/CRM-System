@@ -52,6 +52,25 @@
                         height: 24px;
                     }
                 }
+
+                .cmd-delete {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 34px;
+                    height: 34px;
+                    cursor: pointer;
+                    position: absolute;
+                    bottom: 12px;
+                    right: 12px;
+                    background-color: transparent;
+                    border: none;
+
+                    span {
+                        color: var(--text-color);
+                        font-size: 20px;
+                    }
+                }
             }
     
             .card-back {

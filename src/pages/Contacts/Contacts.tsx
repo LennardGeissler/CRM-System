@@ -36,10 +36,10 @@ const Contacts = () => {
     useEffect(() => {
         const fetchConnectionData = async () => {
             try {
-                const customersResponse = await fetch('http://192.168.178.58:3000/deals');
+                const customersResponse = await fetch('http://localhost:3000/deals');
                 const customersData = await customersResponse.json();
 
-                const addressesResponse = await fetch('http://192.168.178.58:3000/address');
+                const addressesResponse = await fetch('http://localhost:3000/address');
                 const addressesData = await addressesResponse.json();
 
                 const combinedData = customersData.recordset.map((customer: Customer) => {

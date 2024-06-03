@@ -432,6 +432,24 @@ app.delete('/tasks/:taskId', (req, res) => {
   });
 });
 
+app.delete('/projects/:projectId', (req, res) => {
+  const projectId = req.params.projectId;
+
+  const query = `DELETE FROM dbo.Projekte WHERE ProjektID = @projectId`;
+  
+  const request = new sql.Request();
+  request.input('projectId', sql.Int, projectId);
+
+  request.query(query, (err, result) => {
+      if (err) {
+          console.error('Error deleting task:', err);
+          res.status(500).json({ success: false, message: 'Internal server error' });
+      } else {
+          res.status(200).json({ success: true, message: 'Task deleted successfully' });
+      }
+  });
+});
+
 
 
 const port = 3000;
