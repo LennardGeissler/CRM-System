@@ -187,7 +187,14 @@
                         border-radius: 8px;
                         padding: 8px;
                         color: var(--text-color) !important;
+                    }
+
+                    input {
                         color-scheme: dark;
+                    }
+
+                    option {
+                        background-color: var(--surface-background);
                     }
                 }
 
