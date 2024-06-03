@@ -141,16 +141,32 @@ const Tasks = () => {
             if (!response.ok) {
                 throw new Error('Failed to add card');
             }
-    
+
             const data = await response.json();
             const newCardWithId = { ...newCard, ID: data.ID };
-    
+
             setTasks([...tasks, newCardWithId]);
             setIsModalOpen(false);
             setNewCard(initialNewCardState);
 
         } catch (error) {
             console.error('Error adding card:', error);
+        }
+    };
+
+    const deleteTask = async (taskId: number) => {
+        try {
+            const response = await fetch(`http://192.168.178.58:3000/tasks/${taskId}`, {
+                method: 'DELETE'
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to delete task');
+            }
+
+            setTasks(tasks.filter(task => task.ID !== taskId));
+        } catch (error) {
+            console.error('Error deleting task:', error);
         }
     };
 
@@ -228,7 +244,7 @@ const Tasks = () => {
                 <div className="gallery">
                     {filteredTasks.map(task => (
                         <div
-                            className={`card ${flippedCards[task.ID] ? 'flipped' : ''}`}
+                            className={`taskcard ${flippedCards[task.ID] ? 'flipped' : ''}`}
                             key={task.ID}
                             onClick={() => handleCardClick(task.ID)}
                         >
@@ -250,6 +266,14 @@ const Tasks = () => {
                                         {task.Status == 'In Bearbeitung' && (
                                             <span>In Bearbeitung</span>
                                         )}
+                                    </button>
+                                    <button className="cmd-delete" onClick={(e) => {
+                                        e.stopPropagation(); // Prevent the card click event
+                                        deleteTask(task.ID);
+                                    }}>
+                                        <span className="material-symbols-outlined delete-icon">
+                                            delete
+                                        </span>
                                     </button>
                                 </div>
                                 <div className="card-back">

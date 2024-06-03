@@ -22,7 +22,7 @@ const BoardView: React.FC<BoardViewProps> = ({ cards, handleDrop, handleDragStar
                     <h2>{column.status}</h2>
                     <div className="">
                         {column.cards.map(card => (
-                            <div key={card.KundenID} draggable onDragStart={(e) => handleDragStart(e, card.KundenID)}>
+                            <div key={card.KundenID} draggable onDragStart={(e) => handleDragStart(e, card.KundenID)} className="deals-card">
                                 <Card card={card} updateCard={updateCard} />
                             </div>
                         ))}

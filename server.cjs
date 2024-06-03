@@ -368,7 +368,6 @@ app.delete('/events/:eventId', (req, res) => {
 
 app.post('/employeeData', async (req, res) => {
   const { MitarbeiterID } = req.body;
-console.log(MitarbeiterID, ".");
   const request = new sql.Request();
   request.input('MitarbeiterID', sql.Int, parseInt(MitarbeiterID));
 
@@ -390,7 +389,6 @@ console.log(MitarbeiterID, ".");
 
 app.post('/tasks', (req, res) => {
   const { Aufgabe, Person, Unteraufgaben, Deadline, Status } = req.body;
-  console.log(Aufgabe, Person, Unteraufgaben, Deadline, Status);
   const deadlineDate = new Date(Deadline);
 
   const request = new sql.Request();
@@ -415,6 +413,25 @@ app.post('/tasks', (req, res) => {
     }
   });
 });
+
+app.delete('/tasks/:taskId', (req, res) => {
+  const taskId = req.params.taskId;
+
+  const query = `DELETE FROM dbo.Aufgaben WHERE ID = @taskId`;
+  
+  const request = new sql.Request();
+  request.input('taskId', sql.Int, taskId);
+
+  request.query(query, (err, result) => {
+      if (err) {
+          console.error('Error deleting task:', err);
+          res.status(500).json({ success: false, message: 'Internal server error' });
+      } else {
+          res.status(200).json({ success: true, message: 'Task deleted successfully' });
+      }
+  });
+});
+
 
 
 const port = 3000;

@@ -25,9 +25,11 @@ const Card = ({ card, updateCard }: { card: Customer, updateCard: (card: Custome
                 </div>
             </div>
             <button className="action">
-                <span className="material-symbols-outlined">
-                    arrow_circle_right
-                </span>
+                <a href="/contacts">
+                    <span className="material-symbols-outlined">
+                        arrow_circle_right
+                    </span>
+                </a>
             </button>
         </div>
     );

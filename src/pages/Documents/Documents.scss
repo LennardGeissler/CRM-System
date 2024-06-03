@@ -1,200 +1,203 @@
-.documents-container {
-    width: 100%;
-    height: calc(100vh - 80px);
-    display: flex;
-    color: var(--text-color);
-
-    .folders {
-        flex: 4;
-        border: 1px solid var(--text-color);
-        background-color: var(--surface-background);
-    }
-
-    h2 {
-        margin: 12px;
-        font-size: 24px;
-    }
-
-    .file-explorer {
-        margin-left: 20px;
-    }
-    
-    .line {
+@media screen and (min-width: 481px) {
+    .documents-container {
         width: 100%;
-        height: 1px;
-        background-color: var(--text-color);
-    }
-
-    .options {
-        flex: 4;
+        height: calc(100vh - 80px);
         display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        border: 1px solid var(--text-color);
-        background-color: var(--surface-background);
-
-        .options-inner {
-            padding: 12px;
-
-            .option {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                margin-bottom: 8px;
-
-                button {
-                    background-color: transparent;
-                    height: 20px;
-                    width: 20px;
-                    border: none;
-                    cursor: pointer;
+        color: var(--text-color);
+    
+        .folders {
+            flex: 4;
+            border: 1px solid var(--text-color);
+            background-color: var(--surface-background);
+        }
+    
+        h2 {
+            margin: 12px;
+            font-size: 24px;
+        }
+    
+        .file-explorer {
+            margin-left: 20px;
+        }
+        
+        .line {
+            width: 100%;
+            height: 1px;
+            background-color: var(--text-color);
+        }
+    
+        .options {
+            flex: 4;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            border: 1px solid var(--text-color);
+            background-color: var(--surface-background);
+    
+            .options-inner {
+                padding: 12px;
+    
+                .option {
                     display: flex;
-                    justify-content: center;
                     align-items: center;
-                    transition: transform 0.25s ease;
-                }
-
-                span {
-                    color: var(--text-color);
-                    font-weight: 600;
-                }
-
-                h4 {
-                    font-size: 16px;
-                }
-            }
-
-            .file-information {
-                display: flex;
-                justify-content: center;
-                margin-bottom: 20px;
-
-                ul {
-                    width: 100%;
-                    font-weight: 500;
-
-                    li {
+                    gap: 8px;
+                    margin-bottom: 8px;
+    
+                    button {
+                        background-color: transparent;
+                        height: 20px;
+                        width: 20px;
+                        border: none;
+                        cursor: pointer;
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        height: 32px;
-                        gap: 20px;
-                        font-size: 14px;
-
-                        p {
-                            text-align: end;
-                        }
-
-                        .column1 {
-                            width: 40%;
-                        }
-
-                        .column2 {
-                            width: 40%;
-                            
-                            .status {
-                                background-color: rgba(seagreen, 0.8);
-                                padding: 4px;
-                            }
-                        }
-
+                        transition: transform 0.25s ease;
+                    }
+    
+                    span {
+                        color: var(--text-color);
+                        font-weight: 600;
+                    }
+    
+                    h4 {
+                        font-size: 16px;
                     }
                 }
-            }
-
-            .person {
-                display: flex;
-                justify-content: center;
-
-                ul {
-                    width: 100%;
-                    font-weight: 500;
-
-                    li {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
+    
+                .file-information {
+                    display: flex;
+                    justify-content: center;
+                    margin-bottom: 20px;
+    
+                    ul {
                         width: 100%;
-                        height: 32px;
-                        gap: 20px;
-                        font-size: 14px;
-
-                        p {
-                            text-align: end;
-                        }
-
-                        .column1 {
-                            width: 40%;
-                        }
-
-                        .column2 {
-                            width: 40%;
-                            
-                            .status {
-                                background-color: rgba(#2e8b57, 0.8);
-                                padding: 4px;
+                        font-weight: 500;
+    
+                        li {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            height: 32px;
+                            gap: 20px;
+                            font-size: 14px;
+    
+                            p {
+                                text-align: end;
                             }
+    
+                            .column1 {
+                                width: 40%;
+                            }
+    
+                            .column2 {
+                                width: 40%;
+                                
+                                .status {
+                                    background-color: rgba(seagreen, 0.8);
+                                    padding: 4px;
+                                }
+                            }
+    
                         }
-
+                    }
+                }
+    
+                .person {
+                    display: flex;
+                    justify-content: center;
+    
+                    ul {
+                        width: 100%;
+                        font-weight: 500;
+    
+                        li {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            width: 100%;
+                            height: 32px;
+                            gap: 20px;
+                            font-size: 14px;
+    
+                            p {
+                                text-align: end;
+                            }
+    
+                            .column1 {
+                                width: 40%;
+                            }
+    
+                            .column2 {
+                                width: 40%;
+                                
+                                .status {
+                                    background-color: rgba(#2e8b57, 0.8);
+                                    padding: 4px;
+                                }
+                            }
+    
+                        }
                     }
                 }
             }
         }
-    }
-
-    .file-container {
-        flex: 6;
-        display: flex;
-        justify-content: center;
-
-        .file-inner {
-            width: calc(210px * 2.3);
-            height: calc(297px * 2.3);
-            border: 1px solid var(--text-color);
-            margin-top: 24px;
-            position: relative;
-            background-color: var(--surface-background);
-
-            .dropdown-menu {
-                position: absolute;
-                top: 0;
-                right: 0;
-                display: block;
-                width: 25%;
-                border-left: 1px solid var(--text-color);
-                border-bottom: 1px solid var(--text-color);
-                background-color: transparent;
-
-                button {
+    
+        .file-container {
+            flex: 6;
+            display: flex;
+            justify-content: center;
+    
+            .file-inner {
+                width: calc(210px * 2.3);
+                height: calc(297px * 2.3);
+                border: 1px solid var(--text-color);
+                margin-top: 24px;
+                position: relative;
+                background-color: var(--surface-background);
+    
+                .dropdown-menu {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
                     display: block;
-                    width: 100%;
-                    height: 24px;
-                    border: none;
-                    border-radius: 0;
+                    width: 25%;
+                    border-left: 1px solid var(--text-color);
+                    border-bottom: 1px solid var(--text-color);
                     background-color: transparent;
-                    cursor: pointer;
-                    color: var(--text-color);
-                }
-
-                .toggle {
-                    height: auto;
-                    display: flex;
-                    justify-content: flex-end;
-
-                    span {
-                        color: var(--text-color);
-                        width: 24px;
+    
+                    button {
+                        display: block;
+                        width: 100%;
                         height: 24px;
-                        margin: 2px;
-                        font-weight: 600;
+                        border: none;
+                        border-radius: 0;
+                        background-color: transparent;
+                        cursor: pointer;
+                        color: var(--text-color);
+                    }
+    
+                    .toggle {
+                        height: auto;
+                        display: flex;
+                        justify-content: flex-end;
+    
+                        span {
+                            color: var(--text-color);
+                            width: 24px;
+                            height: 24px;
+                            margin: 2px;
+                            font-weight: 600;
+                        }
                     }
                 }
-            }
-
-            .current-file {
-                width: 100%;
-                height: 100%;
+    
+                .current-file {
+                    width: 100%;
+                    height: 100%;
+                }
             }
         }
     }
 }
+

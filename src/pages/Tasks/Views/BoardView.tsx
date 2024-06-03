@@ -36,13 +36,13 @@ const BoardView: React.FC<BoardViewProps> = ({ tasks, handleDrop, handleDragStar
                     className="column"
                 >
                     <h2>{column.status}</h2>
-                    <div className="cards">
+                    <div className="taskcards">
                         {column.tasks.map(task => (
                             <div
                                 key={task.ID}
                                 draggable
                                 onDragStart={(e) => handleDragStart(e, task.ID)}
-                                className="card"
+                                className="taskcard"
                                 onClick={() => handleCardClick(task.ID)}
                             >
                                 <div className="card-inner">

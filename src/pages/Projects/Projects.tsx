@@ -100,7 +100,7 @@ const Projects = () => {
         <div className="gallery">
             {projects.map(project => (
                 <div
-                    className={`card ${flippedCards[project.ProjektID] ? 'flipped' : ''}`}
+                    className={`projectcard ${flippedCards[project.ProjektID] ? 'flipped' : ''}`}
                     key={project.ProjektID}
                     onClick={() => handleCardClick(project.ProjektID)}
                 >
