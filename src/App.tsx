@@ -6,14 +6,14 @@ import Deals from "./pages/Deals/Deals.tsx";
 import Login from "./pages/Login/Login.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import PersonalCalendar from "./pages/Calendar/PersonalCalendar.tsx";
-import Settings from "./pages/Settings/Settings.tsx";
 import GenerateSessionToken from "./utils/SessionToken.tsx";
 import './App.scss';
 import Documents from "./pages/Documents/Documents.tsx";
 import Tasks from "./pages/Tasks/Tasks.tsx";
 import ThemeProvider from './ThemeContext';
 import Projects from "./pages/Projects/Projects.tsx";
-import Contacts from "./pages/Contacts/Contacts.tsx";
+import Contacts from "./pages/Contacts/PrivateCustomers.tsx";
+import CorporateCustomers from "./pages/CorporateCustomers/CorporateCustomers.tsx";
 
 const App = () => {
   const [sessionToken, setSessionToken] = useState<string | null>(null);
@@ -108,12 +108,12 @@ const MainContent: React.FC<MainContentProps> = ({ userID, user, sessionToken, h
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />
           <Route path="/dashboard" element={sessionToken ? <Dashboard userID={userID} /> : <Login handleLogin={handleLogin} />} />
           <Route path="/deals" element={sessionToken ? <Deals /> : <Login handleLogin={handleLogin} />} />
-          <Route path="/tasks" element={sessionToken ? <Tasks /> : <Login handleLogin={handleLogin} />} />
-          <Route path="/calendar" element={sessionToken ? <PersonalCalendar /> : <Login handleLogin={handleLogin} />} />
-          <Route path="/settings" element={sessionToken ? <Settings /> : <Login handleLogin={handleLogin} />} />
-          <Route path="/documents" element={sessionToken ? <Documents /> : <Login handleLogin={handleLogin} />} />
-          <Route path="/projects" element={sessionToken ? <Projects /> : <Login handleLogin={handleLogin} />} />
-          <Route path="/contacts" element={sessionToken ? <Contacts /> : <Login handleLogin={handleLogin} />} />
+          <Route path="/aufgaben" element={sessionToken ? <Tasks /> : <Login handleLogin={handleLogin} />} />
+          <Route path="/kalender" element={sessionToken ? <PersonalCalendar /> : <Login handleLogin={handleLogin} />} />
+          <Route path="/dokumente" element={sessionToken ? <Documents /> : <Login handleLogin={handleLogin} />} />
+          <Route path="/projekte" element={sessionToken ? <Projects /> : <Login handleLogin={handleLogin} />} />
+          <Route path="/privatkunden" element={sessionToken ? <Contacts /> : <Login handleLogin={handleLogin} />} />
+          <Route path="/firmenkunden" element={sessionToken ? <CorporateCustomers /> : <Login handleLogin={handleLogin} />} />
         </Routes>
       </div>
     </div>

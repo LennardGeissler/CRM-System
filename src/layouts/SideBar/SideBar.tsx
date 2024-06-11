@@ -55,14 +55,14 @@ const SideBar: React.FC<SideBarProps> = ({ handleLogout, sideBar, setSideBar }) 
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/tasks" className={pathname === '/tasks' ? 'active' : ''}>
+                                        <a href="/aufgaben" className={pathname === '/aufgaben' ? 'active' : ''}>
                                             <span className="material-symbols-outlined">
                                                 task
                                             </span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/projects" className={pathname === '/projects' ? 'active' : ''}>
+                                        <a href="/projekte" className={pathname === '/projekte' ? 'active' : ''}>
                                             <span className="material-symbols-outlined">
                                                 deployed_code
                                             </span>
@@ -72,21 +72,34 @@ const SideBar: React.FC<SideBarProps> = ({ handleLogout, sideBar, setSideBar }) 
                                         <div></div>
                                     </div>
                                     <li>
-                                        <a href="/calendar" className={pathname === '/calendar' ? 'active' : ''}>
+                                        <a href="/kalender" className={pathname === '/kalender' ? 'active' : ''}>
                                             <span className="material-symbols-outlined">
                                                 event
                                             </span>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="/contacts" className={pathname === '/contacts' ? 'active' : ''}>
+                                    <li className="customers">
+                                        <a href="/privatkunden" className={pathname === '/privatkunden' ? 'active' : ''}>
                                             <span className="material-symbols-outlined">
                                                 id_card
                                             </span>
+                                            <div>
+                                                P
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li className="customers">
+                                        <a href="/firmenkunden" className={pathname === '/firmenkunden' ? 'active' : ''}>
+                                            <span className="material-symbols-outlined">
+                                                id_card
+                                            </span>
+                                            <div>
+                                                U
+                                            </div>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/documents" className={pathname === '/documents' ? 'active' : ''}>
+                                        <a href="/dokumente" className={pathname === '/dokumente' ? 'active' : ''}>
                                             <span className="material-symbols-outlined">
                                                 attach_file
                                             </span>

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import './Contacts.scss';
+import './CorporateCustomers.scss';
 import CustomerDetails from "./CustomerDetails/CustomerDetails";
 
-interface Customer {
+interface CorporateCustomer {
     KundenID: number,
-    Kundenname: string,
+    Unternehmen: string,
     AdresseID: number,
     Zahlungsinformationen: string,
-    Unternehmen: string,
     Wert: number,
     Status: 'Qualified Lead' | 'Contact Made' | 'Offer Made' | 'In Development' | 'Negotiation Started',
     Straße?: string,
@@ -28,8 +27,8 @@ interface Address {
     Land: string,
 }
 
-const Contacts = () => {
-    const [customers, setCustomers] = useState<Customer[]>([]);
+const CorporateCustomers = () => {
+    const [customers, setCustomers] = useState<CorporateCustomer[]>([]);
     const [view, setView] = useState<string>('table');
     const [customerID, setCustomerID] = useState<number | null>(null)
 
@@ -42,7 +41,7 @@ const Contacts = () => {
                 const addressesResponse = await fetch('http://localhost:3000/address');
                 const addressesData = await addressesResponse.json();
 
-                const combinedData = customersData.recordset.map((customer: Customer) => {
+                const combinedData = customersData.recordset.map((customer: CorporateCustomer) => {
                     const address = addressesData.recordset.find((addr: Address) => addr.AdresseID === customer.AdresseID);
                     return {
                         ...customer,
@@ -64,22 +63,13 @@ const Contacts = () => {
             {view == 'table' && (
                 <>
                     <div className="title">
-                        <h2>Kontaktliste</h2>
+                        <h2>Firmenkunden</h2>
                         <div className="line"></div>
                     </div>
                     <table>
                         <thead>
                             <tr>
                                 <th>KundenID</th>
-                                <th>Kundenname
-                                    {/* <label>
-                                <select value={personFilter} onChange={(e) => setPersonFilter(e.target.value)}>
-                                    <option value="">Alle</option>
-                                    <option value="Lennard Geißler">Lennard Geißler</option>
-                                    <option value="Cedric Bergmann">Cedric Bergmann</option>
-                                </select>
-                            </label> */}
-                                </th>
                                 <th>Unternehmen</th>
                                 <th>Straße</th>
                                 <th>Hausnummer</th>
@@ -108,12 +98,7 @@ const Contacts = () => {
                             {customers.map(customer => (
                                 <tr key={customer.KundenID}>
                                     <td data-label="KundenID">{customer.KundenID}</td>
-                                    <td data-label="Kundenname"
-                                        className="customer-name" onClick={() => {
-                                        setView('customer');
-                                        setCustomerID(customer.KundenID);
-                                    }}>{customer.Kundenname}</td>
-                                    <td data-label="Kundenname">{customer.Unternehmen}</td>
+                                    <td data-label="Unternehmen">{customer.Unternehmen}</td>
                                     <td data-label="Straße">{customer.Straße}</td>
                                     <td data-label="Hausnummer">{customer.Hausnummer}</td>
                                     <td data-label="Stadt">{customer.Stadt}</td>
@@ -135,4 +120,4 @@ const Contacts = () => {
     );
 }
 
-export default Contacts;
+export default CorporateCustomers;

@@ -27,10 +27,10 @@ const AddEventModal: React.FC<AddEventModalProps> = ({ show, handleClose, handle
     <div className="modal">
       <div className="modal-content">
         <span className="close" onClick={handleClose}>&times;</span>
-        <h2>Add New Event</h2>
+        <h2>Neuen Termin hinzufügen</h2>
         <form onSubmit={onSave}>
           <label>
-            <p>Event Title:</p>
+            <p>Terminname:</p>
             <input
               type="text"
               value={title}
@@ -39,7 +39,7 @@ const AddEventModal: React.FC<AddEventModalProps> = ({ show, handleClose, handle
             />
           </label>
           <label>
-            <p>Start Date:</p>
+            <p>Start:</p>
             <input
               type="datetime-local"
               value={start}
@@ -48,7 +48,7 @@ const AddEventModal: React.FC<AddEventModalProps> = ({ show, handleClose, handle
             />
           </label>
           <label>
-            <p>End Date:</p>
+            <p>Ende:</p>
             <input
               type="datetime-local"
               value={end}
@@ -57,7 +57,7 @@ const AddEventModal: React.FC<AddEventModalProps> = ({ show, handleClose, handle
             />
           </label>
           <div className="line"></div>
-          <button type="submit">Add Event</button>
+          <button type="submit">Termin hinzufügen</button>
         </form>
       </div>
     </div>

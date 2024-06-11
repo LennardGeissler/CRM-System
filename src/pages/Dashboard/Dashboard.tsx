@@ -44,8 +44,8 @@ interface Address {
 
 const Dashboard = ({ userID }: { userID: number | null }) => {
     const [leadsByStatus, setLeadsByStatus] = useState([]);
-    const [leadData, setLeadData] = useState<any>([]);
-    const [incomeData, setIncomeData] = useState<any>([]);
+    const [leadData, setLeadData] = useState([]);
+    const [incomeData, setIncomeData] = useState([]);
     const [targetLeads, setTargetLeads] = useState<number>(0);
     const [actualLeads, setActualLeads] = useState<number>(0);
     const [openProjects, setOpenProjects] = useState<Project[]>([]);
@@ -70,7 +70,7 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
                 setLeadData(data);
 
                 if (data.length > 0) {
-                    setTargetLeads(data.reduce((sum: number, entry: any) => sum + entry.TargetLeads, 0));
+                    setTargetLeads(data.reduce((sum: number, entry:any) => sum + entry.TargetLeads, 0));
                     setActualLeads(data.reduce((sum: number, entry: any) => sum + entry.ActualLeads, 0));
                 }
             } catch (error) {
@@ -82,7 +82,7 @@ const Dashboard = ({ userID }: { userID: number | null }) => {
             try {
                 // Fetch data from the server
                 const response = await fetch('http://localhost:3000/incomeDevelopmentData');
-                let data = await response.json();
+                const data = await response.json();
                 setIncomeData(data)
             } catch (error) {
                 console.error('Error fetching income development data: ', error);

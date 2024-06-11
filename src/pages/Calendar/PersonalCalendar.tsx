@@ -6,7 +6,7 @@ import AddEventModal from './AddEventModal';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './PersonalCalendar.scss';
 
-moment.updateLocale('de-de', {
+moment.updateLocale('de', {
     week: {
         dow: 1, // Monday is the first day of the week
     },
@@ -26,22 +26,11 @@ const PersonalCalendar: React.FC = () => {
     const [events, setEvents] = useState<Event[]>([]);
     const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
     const [contextMenuPosition, setContextMenuPosition] = useState<{ left: number; top: number } | null>(null);
-    const [modalShow, setModalShow] = useState(false);
+    const [modalShow, setModalShow] = useState<boolean>(false);
 
     useEffect(() => {
         fetchEvents();
     }, []);
-
-    console.log(events);
-    // const fetchEvents = async () => {
-    //     try {
-    //         const response = await fetch('http://localhost:3000/events');
-    //         const data = await response.json();
-    //         setEvents(data);
-    //     } catch (error) {
-    //         console.error('Error fetching events:', error);
-    //     }
-    // };
 
     const fetchEvents = async () => {
         try {
@@ -49,7 +38,7 @@ const PersonalCalendar: React.FC = () => {
             if (response.ok) {
                 const data = await response.json();
                 // Adjust the data format if necessary
-                const formattedEvents = data.map((event: any) => ({
+                const formattedEvents = data.map((event: Event) => ({
                     EventID: event.EventID,
                     Title: event.Title,
                     Start: new Date(event.Start),
@@ -113,6 +102,15 @@ const PersonalCalendar: React.FC = () => {
         return <div>{date}</div>;
     };
 
+    const formats = {
+        timeGutterFormat: 'HH:mm', // Formats time in the gutter (left side)
+        eventTimeRangeFormat: ({ start, end } : {start:any, end:any}, culture:any, localizer:any) =>
+            `${localizer.format(start, 'HH:mm', culture)} - ${localizer.format(end, 'HH:mm', culture)}`,
+        agendaTimeRangeFormat: ({ start, end }: {start:any, end:any}, culture:any, localizer:any) =>
+            `${localizer.format(start, 'HH:mm', culture)} - ${localizer.format(end, 'HH:mm', culture)}`,
+        dayHeaderFormat: 'dddd, MMMM Do', // Customize day header format if needed
+    };
+
     return (
         <div className="calendar-outer" onContextMenu={handleContextMenu}>
             <Calendar
@@ -125,13 +123,13 @@ const PersonalCalendar: React.FC = () => {
                 views={['month', 'week', 'day']}
                 defaultView="week"
                 showMultiDayTimes
-                culture="de" // Ensure the locale is set correctly
                 components={{
                     toolbar: (props) => <CustomToolbar {...props} onAddEvent={() => setModalShow(true)} />,
                     week: {
                         header: CustomDateHeader,
                     },
                 }}
+                formats={formats}
                 onSelectEvent={event => setSelectedEvent(event)} // Handle event selection
             />
             <AddEventModal
