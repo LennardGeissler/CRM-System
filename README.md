@@ -1,30 +1,25 @@
-# React + TypeScript + Vite
+# CRM-System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Das CRM-System ist eine webbasierte Anwendung zur effizienten Verwaltung von Kundenbeziehungen, Geschäftsprozessen und Unternehmensdaten. Es bietet eine umfassende Plattform für Unternehmen, um ihre Vertriebsaktivitäten zu optimieren, Projekte zu koordinieren und den Kundenservice zu verbessern.
 
-Currently, two official plugins are available:
+## Funktionen und Features
+  - Benutzeranmeldung und -verwaltung
+  - Dashboard: Zentrale Ansicht für Statistiken und wichtige Informationen
+  - Deals: Verwaltung von Geschäftsabschlüssen und Vertriebsaktivitäten
+  - Aufgaben: Organisieren und Verfolgen von Aufgaben und Arbeitsabläufen
+  - Kalender: Persönlicher Kalender zur Terminplanung und -verwaltung
+  - Dokumente: Verwaltung von Unternehmensdokumenten und Dateien
+  - Projekte: Projektmanagement und -koordination
+  - Kundenverwaltung: Speicherung der Daten von Privat- und Firmenkunden
+  
+## Benutzeroberfläche:
+  - Intuitive Benutzeroberfläche mit Sidebar und Header für einfache Navigation
+  - Visuelle Identifikation der Benutzer durch Anzeige des Benutzerprofils
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Design und Anpassbarkeit:
+  - Verwendung eines Theme-Changers (Light & Dark Mode) für die Anpassung des Erscheinungsbild
+  - Responsive Website sowohl für den Desktop als auch für das Handy
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Mitwirkende
+  - Lennard Geißler (@LennardGeissler)
+  - Cedric Bergmann (@OfficialPIRAX)
